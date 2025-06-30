@@ -1,0 +1,10 @@
+.dashboardLayout {
+  display: flex;
+  min-height: 100vh;
+
+  .main {
+    position: relative;
+    width: 85%;
+    background-color: teal;
+  }
+}
