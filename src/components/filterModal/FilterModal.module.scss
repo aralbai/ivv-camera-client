@@ -1,0 +1,61 @@
+.filterModal {
+  position: relative;
+
+  .filter {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    color: #1976d2;
+    width: max-content;
+  }
+
+  .main {
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    z-index: 999;
+    background-color: #fff;
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    padding: 20px;
+    border-radius: 5px;
+    height: 100px;
+    -webkit-box-shadow: 1px 1px 19px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 1px 1px 19px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 1px 1px 19px 0px rgba(34, 60, 80, 0.2);
+
+    li {
+      display: flex;
+      flex-direction: column;
+      width: 30%;
+      gap: 10px;
+
+      input,
+      select {
+        width: 100%;
+        padding: 5px;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 15px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: none;
+      }
+    }
+
+    .close {
+      width: 5%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #1976d2;
+    }
+  }
+}

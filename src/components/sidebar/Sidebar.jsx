@@ -10,7 +10,7 @@ export default function Sidebar() {
 
   return (
     <div className={styles.sidebar}>
-      <h1>IIV</h1>
+      <h1>IIV CAMERA</h1>
 
       <ul>
         <li>
