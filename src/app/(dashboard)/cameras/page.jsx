@@ -6,6 +6,8 @@ import axios from "axios";
 import { format } from "date-fns";
 import { Delete, Edit } from "@mui/icons-material";
 import FilterModal from "@/components/filterModal/FilterModal";
+import SaveToExcel from "@/components/saveToExcel/SaveToExcel";
+import Paginatin from "@/components/pagination/Paginatin";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -18,24 +20,32 @@ const names = {
 export default function CamerasPage() {
   const [cameras, setCameras] = useState([]);
   const [filters, setFilters] = useState({
-    cameraType: "",
-    startDate: new Date(),
+    cameraType: "all",
+    startDate: new Date("2025-01-01"),
     endDate: new Date(),
   });
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalCameras, setTotalCameras] = useState(0);
 
   useEffect(() => {
     const fetchCameras = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/cameras");
+        const res = await axios.get(
+          `http://localhost:5000/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}&page=${page}`
+        );
 
-        setCameras(res.data);
+        setCameras(res.data?.data);
+        setTotalCameras(res.data?.totalItems);
+        setPage(res.data?.currentPage);
+        setTotalPages(res.data?.totalPages);
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchCameras();
-  }, []);
+  }, [filters, page]);
 
   return (
     <div className={styles.cameras}>
@@ -45,11 +55,11 @@ export default function CamerasPage() {
 
       <div className={styles.tableContainer}>
         <div className={styles.top}>
-          <FilterModal />
+          <FilterModal filters={filters} setFilters={setFilters} />
 
-          <div></div>
+          <SaveToExcel />
         </div>
-        <table>
+        <table id="myTable">
           <thead>
             <tr>
               <td>Image</td>
@@ -87,6 +97,13 @@ export default function CamerasPage() {
             ))}
           </tbody>
         </table>
+
+        <Paginatin
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+          totalCameras={totalCameras}
+        />
       </div>
     </div>
   );

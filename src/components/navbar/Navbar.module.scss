@@ -7,6 +7,13 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  padding-left: 50px;
+
+  .filterContainer {
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
 
   .addNew {
     background-color: #1976d2;

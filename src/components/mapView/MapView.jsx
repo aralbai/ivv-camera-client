@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "./MapView.module.scss";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
@@ -20,6 +19,11 @@ export default function MapView() {
   const mapRef = useRef(null);
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
+  const [filters, setFilters] = useState({
+    cameraType: "all",
+    startDate: new Date("2025-01-01"),
+    endDate: new Date(),
+  });
 
   const handlePreviewMarker = (marker) => {
     setTempMarker(marker);
@@ -35,16 +39,18 @@ export default function MapView() {
   useEffect(() => {
     const fetchCameras = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/cameras");
+        const res = await axios.get(
+          `http://localhost:5000/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}`
+        );
 
-        setCameras(res.data);
+        setCameras(res.data?.data);
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchCameras();
-  }, []);
+  }, [filters]);
 
   const getCameraIcon = (type) => {
     let iconUrl = "/icons/camera.png";
@@ -61,11 +67,13 @@ export default function MapView() {
     });
   };
 
-  console.log(addNewClickOpen);
-
   return (
     <div style={{ height: "100vh", width: "100%", pointerEvents: "auto" }}>
-      <Navbar setAddNewModalOpen={setAddNewModalOpen} />
+      <Navbar
+        setAddNewModalOpen={setAddNewModalOpen}
+        filters={filters}
+        setFilters={setFilters}
+      />
 
       <MapContainer
         ref={mapRef}

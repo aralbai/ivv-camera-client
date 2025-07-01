@@ -1,32 +1,37 @@
+"use client";
+
 import DatePicker from "react-datepicker";
 import styles from "./FilterModal.module.scss";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import "react-datepicker/dist/react-datepicker.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Close } from "@mui/icons-material";
-import axios from "axios";
 
-const names = {
-  ptz: "ПТЗ камера",
-  obz: "Обзорний камера",
-  lis: " Распознавание лиц",
-  avto: "Распознавание авто номер",
-  radar: "Радар",
-};
+const names = [
+  {
+    type: "ptz",
+    name: "ПТЗ камера",
+  },
+  {
+    type: "obz",
+    name: "Обзорний камера",
+  },
+  {
+    type: "lis",
+    name: " Распознавание лиц",
+  },
+  {
+    type: "avto",
+    name: "Распознавание авто номер",
+  },
+  {
+    type: "radar",
+    name: "Радар",
+  },
+];
 
-export default function FilterModal() {
+export default function FilterModal({ filters, setFilters }) {
   const [modalOpen, setModalOpen] = useState(false);
-  const [cameras, setCameras] = useState([]);
-
-  useEffect(() => {
-    const fetchCameras = async () => {
-      const res = await axios.get("http://localhost:5000/api/cameras");
-
-      setCameras(res.data);
-    };
-
-    fetchCameras();
-  }, []);
 
   return (
     <div className={styles.filterModal}>
@@ -39,11 +44,22 @@ export default function FilterModal() {
         <ul className={styles.main}>
           <li>
             <label htmlFor="">Camera type</label>
-            <select name="product">
+            <select
+              name="product"
+              value={filters.cameraType}
+              onChange={(e) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  cameraType: e.target.value,
+                }))
+              }
+            >
               <option value="all">Все</option>
 
-              {cameras.map((camera) => (
-                <option key={camera._id}>{names[camera.cameraType]}</option>
+              {names.map((name) => (
+                <option key={name.type} value={name.type}>
+                  {name.name}
+                </option>
               ))}
             </select>
           </li>
@@ -52,7 +68,7 @@ export default function FilterModal() {
             <label htmlFor="">Басланыўы</label>
 
             <DatePicker
-              selected={new Date()}
+              selected={new Date(filters.startDate)}
               onChange={(date) =>
                 setFilters((prev) => ({
                   ...prev,
@@ -68,7 +84,7 @@ export default function FilterModal() {
             <label htmlFor="">Тамамланыўы</label>
 
             <DatePicker
-              selected={new Date()}
+              selected={new Date(filters.endDate)}
               onChange={(date) =>
                 setFilters((prev) => ({
                   ...prev,

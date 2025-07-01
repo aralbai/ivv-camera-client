@@ -1,9 +1,12 @@
+import FilterModal from "../filterModal/FilterModal";
 import styles from "./Navbar.module.scss";
 
-export default function Navbar({ setAddNewModalOpen }) {
+export default function Navbar({ setAddNewModalOpen, filters, setFilters }) {
   return (
     <div className={styles.navbar}>
-      <h1></h1>
+      <div className={styles.filterContainer}>
+        <FilterModal filters={filters} setFilters={setFilters} />
+      </div>
 
       <button
         className={styles.addNew}
