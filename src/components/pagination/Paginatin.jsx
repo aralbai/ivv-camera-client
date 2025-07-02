@@ -15,9 +15,15 @@ export default function Paginatin({ page, setPage, totalPages, totalCameras }) {
         Prev
       </button>
 
-      <p>page: {page}</p>
-      <p>totalPages: {totalPages}</p>
-      <p>totalCameras: {totalCameras}</p>
+      <p>
+        Текущая страница: <b>{page}</b>
+      </p>
+      <p>
+        Всего страниц: <b>{totalPages}</b>
+      </p>
+      <p>
+        Всего камер: <b>{totalCameras}</b>
+      </p>
 
       <button onClick={nextPage} disabled={page === totalPages}>
         Next

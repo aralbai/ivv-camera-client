@@ -19,7 +19,7 @@ export default function SaveToExcel() {
   return (
     <div className={styles.saveToExcel}>
       <button onClick={exportToExcel}>
-        <SaveAltIcon /> Save to Excel
+        <SaveAltIcon /> Сохранить в Excel
       </button>
     </div>
   );

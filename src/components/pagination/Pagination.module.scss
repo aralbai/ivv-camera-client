@@ -1,5 +1,21 @@
 .pagination {
-  padding: 20px;
+  padding: 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  button {
+    background-color: #1976d2;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+
+  p {
+    display: flex;
+    gap: 10px;
+    font-weight: 500;
+    align-items: center;
+  }
 }

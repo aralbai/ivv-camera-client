@@ -1,0 +1,28 @@
+.mapView {
+  .cameraOption {
+    margin: 0;
+    padding: 0;
+
+    h1 {
+      font-size: 15px;
+    }
+
+    p {
+      font-weight: 500;
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      button {
+        background: none;
+        display: flex;
+        align-items: center;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}

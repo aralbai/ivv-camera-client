@@ -19,7 +19,7 @@ export default function Sidebar() {
             className={pathname.includes("/map") ? styles.active : ""}
           >
             <MapIcon />
-            Map
+            Карта
           </Link>
         </li>
         <li>
@@ -28,7 +28,7 @@ export default function Sidebar() {
             className={pathname.includes("/cameras") ? styles.active : ""}
           >
             <VideocamIcon />
-            Cameras
+            Камеры
           </Link>
         </li>
         <li>
@@ -37,7 +37,7 @@ export default function Sidebar() {
             className={pathname.includes("/users") ? styles.active : ""}
           >
             <PeopleAltIcon />
-            Users
+            Пользователи
           </Link>
         </li>
       </ul>

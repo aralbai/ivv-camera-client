@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styles from "./AddNewModal.module.scss";
+import { useEffect, useState } from "react";
+import styles from "./EditCamera.module.scss";
 import axios from "axios";
 import { Close } from "@mui/icons-material";
 
@@ -26,11 +26,16 @@ const names = [
   },
 ];
 
-export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
+export default function EditCamera({
+  setEditModal,
+  selectedCamera,
+  setSelectedCamera,
+}) {
   const [cameraType, setCameraType] = useState("");
+  const [cameraId, setCameraId] = useState("");
   const [address, setAddress] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const [error, setError] = useState("");
 
   const handleError = (lat, long) => {
@@ -59,27 +64,13 @@ export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
     if (hasError) return true;
   };
 
-  const handleShow = (e) => {
-    e.preventDefault();
-    const lat = parseFloat(latitude);
-    const long = parseFloat(longitude);
-
-    const resultError = handleError(lat, long);
-    if (resultError) return;
-
-    const newCamera = {
-      position: [lat, long],
-      cameraType,
-      address,
-    };
-
-    onPreviewMarker(newCamera);
-  };
-
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
+
+    handleError(lat, long);
 
     const data = {
       cameraType: cameraType,
@@ -89,20 +80,38 @@ export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
     };
 
     try {
-      const res = await axios.post("http://localhost:5000/api/cameras", data);
+      // const res = await axios.put(
+      //   `http://localhost:5000/api/cameras/${cameraId}`,
+      //   data
+      // );
 
-      console.log(res.data);
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    setCameraId(selectedCamera?._id);
+    setCameraType(selectedCamera?.cameraType);
+    setAddress(selectedCamera?.address);
+    setLatitude(parseFloat(selectedCamera?.position[1]));
+    setLongitude(parseFloat(selectedCamera?.position[0]));
+  }, [selectedCamera]);
+
+  console.log(typeof latitude);
 
   return (
     <div className={styles.addNewModal}>
       <div className={styles.card}>
         <div className={styles.top}>
           <h1>Добавить новую камеру</h1>
-          <button onClick={() => setAddNewModalOpen(false)}>
+          <button
+            onClick={() => {
+              setEditModal(false);
+              setSelectedCamera(null);
+            }}
+          >
             <Close />
           </button>
         </div>
@@ -157,10 +166,6 @@ export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
           </div>
 
           <p>{error}</p>
-
-          <button type="button" onClick={handleShow}>
-            Показать на карте
-          </button>
 
           <button>Сохранять</button>
         </form>

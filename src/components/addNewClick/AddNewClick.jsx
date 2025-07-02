@@ -1,6 +1,30 @@
 import { useState } from "react";
 import styles from "./AddNewClick.module.scss";
 import axios from "axios";
+import { Close } from "@mui/icons-material";
+
+const names = [
+  {
+    type: "ptz",
+    name: "ПТЗ камера",
+  },
+  {
+    type: "obz",
+    name: "Обзорний камера",
+  },
+  {
+    type: "lis",
+    name: " Распознавание лиц",
+  },
+  {
+    type: "avto",
+    name: "Распознавание авто номер",
+  },
+  {
+    type: "radar",
+    name: "Радар",
+  },
+];
 
 export default function AddNewClick({
   setAddNewClickOpen,
@@ -36,33 +60,38 @@ export default function AddNewClick({
     <div className={styles.addNewModal}>
       <div className={styles.card}>
         <div className={styles.top}>
-          <h1>Add New Camera</h1>
+          <h1>Добавить новую камеру</h1>
           <button
             onClick={() => {
               setAddNewClickOpen(false);
               setTempMarkerClick(null);
             }}
           >
-            X
+            <Close />
           </button>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
-            <label htmlFor="">Camera type</label>
+            <label htmlFor="">Тип камеры</label>
             <select
               value={cameraType}
               onChange={(e) => setCameraType(e.target.value)}
-              required
+              required={true}
             >
-              <option value="ptz">PTZ</option>
-              <option value="radar">Radar</option>
-              <option value="lis">Lis</option>
+              <option value="" hidden>
+                Выберите один
+              </option>
+              {names.map((name) => (
+                <option key={name.type} value={name.type}>
+                  {name.name}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="">Adress</label>
+            <label htmlFor="">Адрес</label>
             <input
               type="text"
               value={address}
@@ -71,26 +100,16 @@ export default function AddNewClick({
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="">Lat</label>
-            <input
-              type="number"
-              value={latitude}
-              onChange={(e) => setLatitude(e.target.value)}
-              disabled
-            />
+            <label htmlFor="">Широта </label>
+            <input type="number" value={latitude} disabled />
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="">Long</label>
-            <input
-              type="number"
-              value={longitude}
-              onChange={(e) => setLongitude(e.target.value)}
-              disabled
-            />
+            <label htmlFor="">Долгота</label>
+            <input type="number" value={longitude} disabled />
           </div>
 
-          <button>Save</button>
+          <button>Сохранять</button>
         </form>
       </div>
     </div>

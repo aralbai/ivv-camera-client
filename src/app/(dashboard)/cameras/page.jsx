@@ -8,6 +8,9 @@ import { Delete, Edit } from "@mui/icons-material";
 import FilterModal from "@/components/filterModal/FilterModal";
 import SaveToExcel from "@/components/saveToExcel/SaveToExcel";
 import Paginatin from "@/components/pagination/Paginatin";
+import EditCamera from "@/components/editCamera/EditCamera";
+import DeleteModal from "@/components/deleteModal/DeleteModal";
+import DeleteCM from "@/components/deleteCM/DeleteCM";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -28,6 +31,12 @@ export default function CamerasPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalCameras, setTotalCameras] = useState(0);
 
+  const [editModal, setEditModal] = useState(false);
+  const [selectedCamera, setSelectedCamera] = useState("");
+
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedCameraId, setSelectedCameraId] = useState("");
+
   useEffect(() => {
     const fetchCameras = async () => {
       try {
@@ -45,12 +54,12 @@ export default function CamerasPage() {
     };
 
     fetchCameras();
-  }, [filters, page]);
+  }, [filters, page, deleteModal]);
 
   return (
     <div className={styles.cameras}>
       <div className={styles.title}>
-        <h1>Cameras</h1>
+        <h1>Все камеры</h1>
       </div>
 
       <div className={styles.tableContainer}>
@@ -62,12 +71,12 @@ export default function CamerasPage() {
         <table id="myTable">
           <thead>
             <tr>
-              <td>Image</td>
-              <td>Camer type</td>
-              <td>Address</td>
-              <td>Latitude</td>
-              <td>Longitude</td>
-              <td>Date</td>
+              <td>Икона</td>
+              <td>Тип камеры</td>
+              <td>Адрес</td>
+              <td>Широта</td>
+              <td>Долгота</td>
+              <td>Дата добавления</td>
               <td></td>
             </tr>
           </thead>
@@ -76,7 +85,14 @@ export default function CamerasPage() {
             {cameras.map((camera) => (
               <tr key={camera._id}>
                 <td>
-                  <img src={`/${camera.cameraType}.png`} alt="" />
+                  <img
+                    src={
+                      camera.cameraType === "obz"
+                        ? `/ptz.png`
+                        : `/${camera.cameraType}.png`
+                    }
+                    alt=""
+                  />
                 </td>
                 <td>{`${names[camera.cameraType]}`}</td>
                 <td>{camera.address}</td>
@@ -85,10 +101,20 @@ export default function CamerasPage() {
                 <td>{format(camera.createdAt, "dd.MM.yyyy")}</td>
                 <td>
                   <div className={styles.action}>
-                    <button>
+                    <button
+                      onClick={() => {
+                        setEditModal(true);
+                        setSelectedCamera(camera);
+                      }}
+                    >
                       <Edit />
                     </button>
-                    <button>
+                    <button
+                      onClick={() => {
+                        setDeleteModal(true);
+                        setSelectedCameraId(camera._id);
+                      }}
+                    >
                       <Delete />
                     </button>
                   </div>
@@ -104,6 +130,22 @@ export default function CamerasPage() {
           totalPages={totalPages}
           totalCameras={totalCameras}
         />
+
+        {editModal && (
+          <EditCamera
+            setEditModal={setEditModal}
+            selectedCamera={selectedCamera}
+            setSelectedCamera={setSelectedCamera}
+          />
+        )}
+
+        {deleteModal && (
+          <DeleteCM
+            selectedCameraId={selectedCameraId}
+            setSelectedCameraId={setSelectedCameraId}
+            setDeleteModal={setDeleteModal}
+          />
+        )}
       </div>
     </div>
   );

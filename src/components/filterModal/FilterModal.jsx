@@ -37,13 +37,13 @@ export default function FilterModal({ filters, setFilters }) {
     <div className={styles.filterModal}>
       <div className={styles.filter} onClick={() => setModalOpen(!modalOpen)}>
         <FilterListIcon />
-        <p>Filter</p>
+        <p>Фильтр</p>
       </div>
 
       {modalOpen && (
         <ul className={styles.main}>
           <li>
-            <label htmlFor="">Camera type</label>
+            <label htmlFor="">Тип камеры</label>
             <select
               name="product"
               value={filters.cameraType}
@@ -65,7 +65,7 @@ export default function FilterModal({ filters, setFilters }) {
           </li>
 
           <li>
-            <label htmlFor="">Басланыўы</label>
+            <label htmlFor="">Дата начала</label>
 
             <DatePicker
               selected={new Date(filters.startDate)}
@@ -81,7 +81,7 @@ export default function FilterModal({ filters, setFilters }) {
             />
           </li>
           <li>
-            <label htmlFor="">Тамамланыўы</label>
+            <label htmlFor="">Дата окончания</label>
 
             <DatePicker
               selected={new Date(filters.endDate)}

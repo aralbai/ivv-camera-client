@@ -1,0 +1,66 @@
+.deleteContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+
+  .deleteModal {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      h1 {
+        font-size: 15px;
+      }
+
+      button {
+        background: none;
+        color: #1976d2;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        border: none;
+      }
+    }
+
+    .bottom {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      button {
+        width: 50%;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        background-color: #1976d2;
+        cursor: pointer;
+
+        &:last-child {
+          background-color: #ff3d57;
+        }
+      }
+    }
+  }
+}

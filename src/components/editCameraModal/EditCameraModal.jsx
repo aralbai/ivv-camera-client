@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styles from "./AddNewModal.module.scss";
+import { useEffect, useState } from "react";
+import styles from "./EditCameraModal.module.scss";
 import axios from "axios";
 import { Close } from "@mui/icons-material";
 
@@ -26,8 +26,15 @@ const names = [
   },
 ];
 
-export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
+export default function EditCameraModal({
+  setEditModalOpen,
+  editableCamera,
+  setEditableCamera,
+  onPreviewMarker,
+  setSelectedCamera,
+}) {
   const [cameraType, setCameraType] = useState("");
+  const [cameraId, setCameraId] = useState("");
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -68,6 +75,7 @@ export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
     if (resultError) return;
 
     const newCamera = {
+      _id: cameraId,
       position: [lat, long],
       cameraType,
       address,
@@ -78,6 +86,7 @@ export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
+
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
 
@@ -89,7 +98,10 @@ export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
     };
 
     try {
-      const res = await axios.post("http://localhost:5000/api/cameras", data);
+      const res = await axios.put(
+        `http://localhost:5000/api/cameras/${cameraId}`,
+        data
+      );
 
       console.log(res.data);
     } catch (err) {
@@ -97,12 +109,26 @@ export default function AddNewModal({ setAddNewModalOpen, onPreviewMarker }) {
     }
   };
 
+  useEffect(() => {
+    setCameraId(editableCamera?._id);
+    setCameraType(editableCamera?.cameraType);
+    setAddress(editableCamera?.address);
+    setLatitude(editableCamera?.position[0]);
+    setLongitude(editableCamera?.position[1]);
+  }, [editableCamera]);
+
   return (
     <div className={styles.addNewModal}>
       <div className={styles.card}>
         <div className={styles.top}>
           <h1>Добавить новую камеру</h1>
-          <button onClick={() => setAddNewModalOpen(false)}>
+          <button
+            onClick={() => {
+              setEditModalOpen(false);
+              setEditableCamera(null);
+              setSelectedCamera(true);
+            }}
+          >
             <Close />
           </button>
         </div>
