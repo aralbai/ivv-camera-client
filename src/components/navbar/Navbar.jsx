@@ -1,5 +1,6 @@
 import FilterModal from "../filterModal/FilterModal";
 import styles from "./Navbar.module.scss";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 
 export default function Navbar({ setAddNewModalOpen, filters, setFilters }) {
   return (
@@ -12,7 +13,8 @@ export default function Navbar({ setAddNewModalOpen, filters, setFilters }) {
         className={styles.addNew}
         onClick={() => setAddNewModalOpen(true)}
       >
-        Add New
+        <AddLocationAltIcon />
+        Добавить новый
       </button>
     </div>
   );

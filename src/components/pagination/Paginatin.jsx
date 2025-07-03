@@ -12,7 +12,7 @@ export default function Paginatin({ page, setPage, totalPages, totalCameras }) {
   return (
     <div className={styles.pagination}>
       <button onClick={prevPage} disabled={page === 1}>
-        Prev
+        Предыдущий
       </button>
 
       <p>
@@ -26,7 +26,7 @@ export default function Paginatin({ page, setPage, totalPages, totalCameras }) {
       </p>
 
       <button onClick={nextPage} disabled={page === totalPages}>
-        Next
+        Следующий
       </button>
     </div>
   );

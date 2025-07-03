@@ -54,7 +54,7 @@ export default function CamerasPage() {
     };
 
     fetchCameras();
-  }, [filters, page, deleteModal]);
+  }, [filters, page, deleteModal, editModal]);
 
   return (
     <div className={styles.cameras}>

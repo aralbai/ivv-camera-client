@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./EditCameraModal.module.scss";
 import axios from "axios";
 import { Close } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const names = [
   {
@@ -45,20 +46,19 @@ export default function EditCameraModal({
     let hasError = false;
 
     if (isNaN(long)) {
-      newErrors = "Longgitude raqam bo‘lishi kerak.";
+      newErrors = "Долгота должна быть числом.";
       hasError = true;
     } else if (long < 55 || long > 74.5) {
       newErrors =
-        "Longitude faqat O‘zbekiston hududida bo‘lishi kerak (55–74.5).";
+        "Долгота должна быть только в пределах Узбекистана (55–74,5).";
       hasError = true;
     }
 
     if (isNaN(lat)) {
-      newErrors = "Latitude raqam bo‘lishi kerak.";
+      newErrors = "Широта должна быть числом.";
       hasError = true;
     } else if (lat < 37 || lat > 46.5) {
-      newErrors =
-        "Latitude faqat O‘zbekiston hududida bo‘lishi kerak (37–46.5).";
+      newErrors = "Широта должна быть только в пределах Узбекистана (37–46,5).";
       hasError = true;
     }
 
@@ -85,7 +85,7 @@ export default function EditCameraModal({
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
@@ -103,9 +103,13 @@ export default function EditCameraModal({
         data
       );
 
-      console.log(res.data);
+      setEditModalOpen(false);
+      setEditableCamera(null);
+      setSelectedCamera(true);
+      toast.success("Камера добавлена!");
     } catch (err) {
       console.log(err);
+      toast.error("Ошибка сервера!");
     }
   };
 

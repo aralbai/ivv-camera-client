@@ -12,8 +12,9 @@ import DblClickHandler from "../dblClickHandler/DblClickHandler";
 import AddNewClick from "../addNewClick/AddNewClick";
 import { Delete, Edit } from "@mui/icons-material";
 import EditCameraModal from "../editCameraModal/EditCameraModal";
-import { set } from "date-fns";
 import DeleteModal from "../deleteModal/DeleteModal";
+import LocationPinIcon from "@mui/icons-material/LocationPin";
+import LanguageIcon from "@mui/icons-material/Language";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -84,7 +85,7 @@ export default function MapView() {
     };
 
     fetchCameras();
-  }, [filters]);
+  }, [filters, addNewModalOpen, addNewClickOpen, editModalOpen]);
 
   const getCameraIcon = (type) => {
     let iconUrl = "/icons/camera.png";
@@ -150,13 +151,13 @@ export default function MapView() {
                 <div className={styles.cameraOption}>
                   <h1>{names[camera.cameraType]}</h1>
                   <p>
-                    Адрес: <b>{camera.address}</b>
+                    <LocationPinIcon /> <b>{camera.address}</b>
                   </p>
                   <p>
-                    Широта: <b>{camera.position[1]}</b>
+                    <LanguageIcon /> Широта: <b>{camera.position[1]}</b>
                   </p>
                   <p>
-                    Долгота: <b>{camera.position[0]}</b>
+                    <LanguageIcon /> Долгота: <b>{camera.position[0]}</b>
                   </p>
 
                   <div>
@@ -172,7 +173,8 @@ export default function MapView() {
                         });
                       }}
                     >
-                      <Edit />
+                      {/* <Edit /> */}
+                      Редактировать
                     </button>
 
                     <button
@@ -182,7 +184,8 @@ export default function MapView() {
                         setDeletedCamereId(camera._id);
                       }}
                     >
-                      <Delete />
+                      {/* <Delete /> */}
+                      Удалить
                     </button>
                   </div>
                 </div>
@@ -249,6 +252,7 @@ export default function MapView() {
         <AddNewModal
           setAddNewModalOpen={setAddNewModalOpen}
           onPreviewMarker={handlePreviewMarker}
+          setTempMarker={setTempMarker}
         />
       )}
 

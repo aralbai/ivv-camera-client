@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./EditCamera.module.scss";
 import axios from "axios";
 import { Close } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const names = [
   {
@@ -43,20 +44,19 @@ export default function EditCamera({
     let hasError = false;
 
     if (isNaN(long)) {
-      newErrors = "Longgitude raqam bo‘lishi kerak.";
+      newErrors = "Долгота должна быть числом.";
       hasError = true;
     } else if (long < 55 || long > 74.5) {
       newErrors =
-        "Longitude faqat O‘zbekiston hududida bo‘lishi kerak (55–74.5).";
+        "Долгота должна быть только в пределах Узбекистана (55–74,5).";
       hasError = true;
     }
 
     if (isNaN(lat)) {
-      newErrors = "Latitude raqam bo‘lishi kerak.";
+      newErrors = "Широта должна быть числом.";
       hasError = true;
     } else if (lat < 37 || lat > 46.5) {
-      newErrors =
-        "Latitude faqat O‘zbekiston hududida bo‘lishi kerak (37–46.5).";
+      newErrors = "Широта должна быть только в пределах Узбекистана (37–46,5).";
       hasError = true;
     }
 
@@ -70,7 +70,8 @@ export default function EditCamera({
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
 
-    handleError(lat, long);
+    const err = handleError(lat, long);
+    if (err) return;
 
     const data = {
       cameraType: cameraType,
@@ -80,14 +81,17 @@ export default function EditCamera({
     };
 
     try {
-      // const res = await axios.put(
-      //   `http://localhost:5000/api/cameras/${cameraId}`,
-      //   data
-      // );
+      const res = await axios.put(
+        `http://localhost:5000/api/cameras/${cameraId}`,
+        data
+      );
 
-      console.log(data);
+      setEditModal(false);
+      setSelectedCamera(null);
+      toast.success("Камера обновлена!");
     } catch (err) {
       console.log(err);
+      toast.error("Server error!");
     }
   };
 
@@ -98,8 +102,6 @@ export default function EditCamera({
     setLatitude(parseFloat(selectedCamera?.position[1]));
     setLongitude(parseFloat(selectedCamera?.position[0]));
   }, [selectedCamera]);
-
-  console.log(typeof latitude);
 
   return (
     <div className={styles.addNewModal}>

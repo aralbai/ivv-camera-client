@@ -35,6 +35,14 @@ a {
   text-decoration: none;
 }
 
+.leaflet-popup-content-wrapper {
+  min-width: 300px !important;
+}
+
+.leaflet-popup-close-button {
+  display: none;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

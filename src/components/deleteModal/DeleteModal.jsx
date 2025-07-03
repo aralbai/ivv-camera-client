@@ -1,6 +1,7 @@
 import { Close } from "@mui/icons-material";
 import styles from "./DeleteModal.module.scss";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function DeleteModal({
   deletedCameraId,
@@ -24,8 +25,10 @@ export default function DeleteModal({
       setDeleteModalOpen(false);
       setSelectedCamera(true);
       setDeletedCamereId("");
+      toast.success("Камера добавлена!");
     } catch (err) {
       console.log(err);
+      toast.error("Ошибка сервера!");
     }
   };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./AddNewClick.module.scss";
 import axios from "axios";
 import { Close } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const names = [
   {
@@ -36,7 +37,7 @@ export default function AddNewClick({
   const [address, setAddress] = useState("");
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
 
@@ -50,9 +51,12 @@ export default function AddNewClick({
     try {
       const res = await axios.post("http://localhost:5000/api/cameras", data);
 
-      console.log(res.data);
+      setAddNewClickOpen(false);
+      setTempMarkerClick(null);
+      toast.success("Камера добавлена!");
     } catch (err) {
       console.log(err);
+      toast.error("Ошибка сервера!");
     }
   };
 
