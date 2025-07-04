@@ -3,7 +3,7 @@
 import styles from "./MapView.module.scss";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import Navbar from "../navbar/Navbar";
 import AddNewModal from "../addNewModal/AddNewModal";
@@ -15,6 +15,7 @@ import EditCameraModal from "../editCameraModal/EditCameraModal";
 import DeleteModal from "../deleteModal/DeleteModal";
 import LocationPinIcon from "@mui/icons-material/LocationPin";
 import LanguageIcon from "@mui/icons-material/Language";
+import { useUserContext } from "@/context/UserContext";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -25,6 +26,7 @@ const names = {
 };
 
 export default function MapView() {
+  const { user } = useUserContext();
   const [addNewModalOpen, setAddNewModalOpen] = useState(false);
   const [addNewClickOpen, setAddNewClickOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -123,19 +125,20 @@ export default function MapView() {
         style={{ height: "100%", width: "100%" }}
         whenCreated={(mapInstance) => {
           mapRef.current = mapInstance;
-          console.log("✅ Map loaded:", mapInstance);
         }}
         doubleClickZoom={false}
       >
-        <DblClickHandler
-          onDblClick={(e) => {
-            const { lat, lng } = e.latlng;
-            setLatitude(lat.toFixed(6));
-            setLongitude(lng.toFixed(6));
-            setTempMarkerClick([lat, lng]);
-            setAddNewClickOpen(true);
-          }}
-        />
+        {user?.role === "admin" && (
+          <DblClickHandler
+            onDblClick={(e) => {
+              const { lat, lng } = e.latlng;
+              setLatitude(lat.toFixed(6));
+              setLongitude(lng.toFixed(6));
+              setTempMarkerClick([lat, lng]);
+              setAddNewClickOpen(true);
+            }}
+          />
+        )}
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -160,34 +163,34 @@ export default function MapView() {
                     <LanguageIcon /> Долгота: <b>{camera.position[0]}</b>
                   </p>
 
-                  <div>
-                    <button
-                      onClick={() => {
-                        setEditModalOpen(!editModalOpen);
-                        setSelectedCamera(false);
-                        setEditableCamera({
-                          _id: camera._id,
-                          position: [camera.position[1], camera.position[0]],
-                          cameraType: camera.cameraType,
-                          address: camera.address,
-                        });
-                      }}
-                    >
-                      {/* <Edit /> */}
-                      Редактировать
-                    </button>
+                  {user?.role === "admin" && (
+                    <div>
+                      <button
+                        onClick={() => {
+                          setEditModalOpen(!editModalOpen);
+                          setSelectedCamera(false);
+                          setEditableCamera({
+                            _id: camera._id,
+                            position: [camera.position[1], camera.position[0]],
+                            cameraType: camera.cameraType,
+                            address: camera.address,
+                          });
+                        }}
+                      >
+                        Редактировать
+                      </button>
 
-                    <button
-                      onClick={() => {
-                        setDeleteModal(!deleteModal);
-                        setSelectedCamera(false);
-                        setDeletedCamereId(camera._id);
-                      }}
-                    >
-                      {/* <Delete /> */}
-                      Удалить
-                    </button>
-                  </div>
+                      <button
+                        onClick={() => {
+                          setDeleteModal(!deleteModal);
+                          setSelectedCamera(false);
+                          setDeletedCamereId(camera._id);
+                        }}
+                      >
+                        Удалить
+                      </button>
+                    </div>
+                  )}
                 </div>
               </Popup>
             )}

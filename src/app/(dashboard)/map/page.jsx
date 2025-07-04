@@ -1,7 +1,7 @@
 "use client";
 
+import ProtectedRoutes from "@/components/protectedRoutes/ProtectedRoutes";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 
 const MapView = dynamic(() => import("@/components/mapView/MapView"), {
   ssr: false,
@@ -9,8 +9,10 @@ const MapView = dynamic(() => import("@/components/mapView/MapView"), {
 
 export default function MapPage() {
   return (
-    <div>
-      <MapView />
-    </div>
+    <ProtectedRoutes allowedRoles={["admin", "user"]}>
+      <div>
+        <MapView />
+      </div>
+    </ProtectedRoutes>
   );
 }

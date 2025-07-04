@@ -11,6 +11,8 @@ import Paginatin from "@/components/pagination/Paginatin";
 import EditCamera from "@/components/editCamera/EditCamera";
 import DeleteModal from "@/components/deleteModal/DeleteModal";
 import DeleteCM from "@/components/deleteCM/DeleteCM";
+import { useUserContext } from "@/context/UserContext";
+import ProtectedRoutes from "@/components/protectedRoutes/ProtectedRoutes";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -21,6 +23,7 @@ const names = {
 };
 
 export default function CamerasPage() {
+  const { user } = useUserContext();
   const [cameras, setCameras] = useState([]);
   const [filters, setFilters] = useState({
     cameraType: "all",
@@ -57,96 +60,100 @@ export default function CamerasPage() {
   }, [filters, page, deleteModal, editModal]);
 
   return (
-    <div className={styles.cameras}>
-      <div className={styles.title}>
-        <h1>Все камеры</h1>
-      </div>
-
-      <div className={styles.tableContainer}>
-        <div className={styles.top}>
-          <FilterModal filters={filters} setFilters={setFilters} />
-
-          <SaveToExcel />
+    <ProtectedRoutes allowedRoles={["admin", "user"]}>
+      <div className={styles.cameras}>
+        <div className={styles.title}>
+          <h1>Все камеры</h1>
         </div>
-        <table id="myTable">
-          <thead>
-            <tr>
-              <td>Икона</td>
-              <td>Тип камеры</td>
-              <td>Адрес</td>
-              <td>Широта</td>
-              <td>Долгота</td>
-              <td>Дата добавления</td>
-              <td></td>
-            </tr>
-          </thead>
 
-          <tbody>
-            {cameras.map((camera) => (
-              <tr key={camera._id}>
-                <td>
-                  <img
-                    src={
-                      camera.cameraType === "obz"
-                        ? `/ptz.png`
-                        : `/${camera.cameraType}.png`
-                    }
-                    alt=""
-                  />
-                </td>
-                <td>{`${names[camera.cameraType]}`}</td>
-                <td>{camera.address}</td>
-                <td>{camera.position[1]}</td>
-                <td>{camera.position[0]}</td>
-                <td>{format(camera.createdAt, "dd.MM.yyyy")}</td>
-                <td>
-                  <div className={styles.action}>
-                    <button
-                      onClick={() => {
-                        setEditModal(true);
-                        setSelectedCamera(camera);
-                      }}
-                    >
-                      <Edit />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setDeleteModal(true);
-                        setSelectedCameraId(camera._id);
-                      }}
-                    >
-                      <Delete />
-                    </button>
-                  </div>
-                </td>
+        <div className={styles.tableContainer}>
+          <div className={styles.top}>
+            <FilterModal filters={filters} setFilters={setFilters} />
+
+            <SaveToExcel />
+          </div>
+          <table id="myTable">
+            <thead>
+              <tr>
+                <td>Икона</td>
+                <td>Тип камеры</td>
+                <td>Адрес</td>
+                <td>Широта</td>
+                <td>Долгота</td>
+                <td>Дата добавления</td>
+                {user?.role === "admin" && <td></td>}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
 
-        <Paginatin
-          page={page}
-          setPage={setPage}
-          totalPages={totalPages}
-          totalCameras={totalCameras}
-        />
+            <tbody>
+              {cameras.map((camera) => (
+                <tr key={camera._id}>
+                  <td>
+                    <img
+                      src={
+                        camera.cameraType === "obz"
+                          ? `/ptz.png`
+                          : `/${camera.cameraType}.png`
+                      }
+                      alt=""
+                    />
+                  </td>
+                  <td>{`${names[camera.cameraType]}`}</td>
+                  <td>{camera.address}</td>
+                  <td>{camera.position[1]}</td>
+                  <td>{camera.position[0]}</td>
+                  <td>{format(camera.createdAt, "dd.MM.yyyy")}</td>
+                  {user?.role === "admin" && (
+                    <td>
+                      <div className={styles.action}>
+                        <button
+                          onClick={() => {
+                            setEditModal(true);
+                            setSelectedCamera(camera);
+                          }}
+                        >
+                          <Edit />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setDeleteModal(true);
+                            setSelectedCameraId(camera._id);
+                          }}
+                        >
+                          <Delete />
+                        </button>
+                      </div>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-        {editModal && (
-          <EditCamera
-            setEditModal={setEditModal}
-            selectedCamera={selectedCamera}
-            setSelectedCamera={setSelectedCamera}
+          <Paginatin
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+            totalCameras={totalCameras}
           />
-        )}
 
-        {deleteModal && (
-          <DeleteCM
-            selectedCameraId={selectedCameraId}
-            setSelectedCameraId={setSelectedCameraId}
-            setDeleteModal={setDeleteModal}
-          />
-        )}
+          {editModal && (
+            <EditCamera
+              setEditModal={setEditModal}
+              selectedCamera={selectedCamera}
+              setSelectedCamera={setSelectedCamera}
+            />
+          )}
+
+          {deleteModal && (
+            <DeleteCM
+              selectedCameraId={selectedCameraId}
+              setSelectedCameraId={setSelectedCameraId}
+              setDeleteModal={setDeleteModal}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </ProtectedRoutes>
   );
 }
