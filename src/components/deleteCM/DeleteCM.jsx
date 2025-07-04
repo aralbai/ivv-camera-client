@@ -27,7 +27,7 @@ export default function DeleteCM({
     <div className={styles.deleteContainer}>
       <div className={styles.deleteModal}>
         <div className={styles.top}>
-          <h1>Element will be delete?</h1>
+          <h1>Вы уверены, что хотите удалить этот элемент?</h1>
           <button
             onClick={() => {
               setDeleteModal(false);
@@ -39,7 +39,7 @@ export default function DeleteCM({
         </div>
 
         <div className={styles.bottom}>
-          <button onClick={handleDelete}>Delete</button>
+          <button onClick={handleDelete}>Удалить</button>
 
           <button
             onClick={() => {
@@ -47,7 +47,7 @@ export default function DeleteCM({
               setSelectedCameraId("");
             }}
           >
-            Cancel
+            Отмена
           </button>
         </div>
       </div>
