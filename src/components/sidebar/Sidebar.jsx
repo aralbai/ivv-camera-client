@@ -9,9 +9,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import axios from "@/lib/axios";
 import { useUserContext } from "@/context/UserContext";
 import { toast } from "react-toastify";
+import { Close } from "@mui/icons-material";
+import { useMenuContext } from "@/context/MenuContext";
 
-export default function Sidebar() {
+export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const { user } = useUserContext();
+  const { menuOpen, setMenuOpen } = useMenuContext();
   const pathname = usePathname();
   const { setUser, setAccessToken } = useUserContext();
 
@@ -25,9 +28,15 @@ export default function Sidebar() {
   };
 
   return (
-    <div className={styles.sidebar}>
+    <div className={menuOpen ? `${styles.sidebarOpen}` : `${styles.sidebar}`}>
       <div className={styles.top}>
-        <h1>IIV CAMERA</h1>
+        <div className={styles.title}>
+          <h1>IIV CAMERA</h1>
+
+          <button>
+            <Close onClick={() => setMenuOpen(false)} />
+          </button>
+        </div>
 
         <ul>
           <li>

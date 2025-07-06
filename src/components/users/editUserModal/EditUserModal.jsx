@@ -47,7 +47,7 @@ export default function EditUserModal({
 
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/users/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`,
         data
       );
       setEditModal(false);

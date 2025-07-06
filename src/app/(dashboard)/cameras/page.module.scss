@@ -3,8 +3,24 @@
 
   .title {
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 5px 5px -3px,
+      rgba(0, 0, 0, 0.043) 0px 8px 10px 1px,
+      rgba(0, 0, 0, 0.035) 0px 3px 14px 2px;
+
+    .menu {
+      background-color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
 
     h1 {
+      margin-left: 20px;
       font-size: 20px;
     }
   }
@@ -58,6 +74,18 @@
             justify-content: center;
           }
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .cameras {
+    padding: 10px;
+
+    .tableContainer {
+      .top {
+        flex-direction: column;
       }
     }
   }

@@ -78,7 +78,7 @@ export default function MapView() {
     const fetchCameras = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}`
         );
 
         setCameras(res.data?.data);

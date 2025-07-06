@@ -3,6 +3,7 @@ import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import UserContextProvider from "@/context/UserContext";
+import MenuContextProvider from "@/context/MenuContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,9 +25,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <UserContextProvider>
-          {children}
+          <MenuContextProvider>
+            {children}
 
-          <ToastContainer />
+            <ToastContainer />
+          </MenuContextProvider>
         </UserContextProvider>
       </body>
     </html>

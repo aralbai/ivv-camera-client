@@ -49,7 +49,10 @@ export default function AddNewClick({
     };
 
     try {
-      const res = await axios.post("http://localhost:5000/api/cameras", data);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cameras`,
+        data
+      );
 
       setAddNewClickOpen(false);
       setTempMarkerClick(null);

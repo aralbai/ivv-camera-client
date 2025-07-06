@@ -11,7 +11,7 @@ export default function DeleteCM({
   const handleDelete = async () => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/cameras/${selectedCameraId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cameras/${selectedCameraId}`
       );
 
       setDeleteModal(false);

@@ -64,3 +64,34 @@
     }
   }
 }
+
+@media screen and (max-width: 900px) {
+  .login {
+    padding: 20px;
+
+    .card {
+      width: 100%;
+      padding: 50px 20px;
+
+      .box {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .login {
+    padding: 10px;
+
+    .card {
+      width: 100%;
+      flex-direction: column;
+      padding: 50px 20px;
+
+      .box {
+        width: 100%;
+      }
+    }
+  }
+}

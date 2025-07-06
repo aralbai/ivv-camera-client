@@ -12,8 +12,9 @@
 
   .main {
     position: absolute;
-    bottom: -100px;
-    left: 0;
+    bottom: -110px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 999;
     background-color: #fff;
     display: flex;
@@ -56,6 +57,33 @@
       justify-content: center;
       cursor: pointer;
       color: #1976d2;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .filterModal {
+    .filter {
+      svg {
+        display: none;
+      }
+    }
+
+    .main {
+      top: 30px;
+      // left: ;
+      flex-direction: column;
+      height: max-content;
+
+      li {
+        width: 100%;
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
     }
   }
 }

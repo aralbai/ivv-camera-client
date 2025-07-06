@@ -14,7 +14,7 @@ export default function DeleteModal({
   const handleDelete = async () => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/cameras/${deletedCameraId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cameras/${deletedCameraId}`
       );
 
       const newCameras = cameras.filter(

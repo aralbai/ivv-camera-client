@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import axios from "axios";
 import { format } from "date-fns";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Menu } from "@mui/icons-material";
 import FilterModal from "@/components/filterModal/FilterModal";
 import SaveToExcel from "@/components/saveToExcel/SaveToExcel";
 import Paginatin from "@/components/pagination/Paginatin";
@@ -13,6 +13,7 @@ import DeleteModal from "@/components/deleteModal/DeleteModal";
 import DeleteCM from "@/components/deleteCM/DeleteCM";
 import { useUserContext } from "@/context/UserContext";
 import ProtectedRoutes from "@/components/protectedRoutes/ProtectedRoutes";
+import { useMenuContext } from "@/context/MenuContext";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -24,6 +25,7 @@ const names = {
 
 export default function CamerasPage() {
   const { user } = useUserContext();
+  const { menuOpen, setMenuOpen } = useMenuContext();
   const [cameras, setCameras] = useState([]);
   const [filters, setFilters] = useState({
     cameraType: "all",
@@ -44,7 +46,7 @@ export default function CamerasPage() {
     const fetchCameras = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}&page=${page}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}&page=${page}`
         );
 
         setCameras(res.data?.data);
@@ -63,6 +65,10 @@ export default function CamerasPage() {
     <ProtectedRoutes allowedRoles={["admin", "user"]}>
       <div className={styles.cameras}>
         <div className={styles.title}>
+          <button className={styles.menu}>
+            <Menu onClick={() => setMenuOpen(true)} />
+          </button>
+
           <h1>Все камеры</h1>
         </div>
 

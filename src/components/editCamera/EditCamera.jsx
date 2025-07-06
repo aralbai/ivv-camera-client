@@ -82,7 +82,7 @@ export default function EditCamera({
 
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/cameras/${cameraId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cameras/${cameraId}`,
         data
       );
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import axios from "axios";
 import { format } from "date-fns";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Menu } from "@mui/icons-material";
 import SaveToExcel from "@/components/saveToExcel/SaveToExcel";
 import { useUserContext } from "@/context/UserContext";
 import ProtectedRoutes from "@/components/protectedRoutes/ProtectedRoutes";
@@ -12,9 +12,11 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import AddUserModal from "@/components/users/addUserModal/AddUserModal";
 import DeleteUserModal from "@/components/users/deleteUserModal/DeleteUserModal";
 import EditUserModal from "@/components/users/editUserModal/EditUserModal";
+import { useMenuContext } from "@/context/MenuContext";
 
 export default function UsersPage() {
   const { user } = useUserContext();
+  const { menuOpen, setMenuOpen } = useMenuContext();
   const [users, setUsers] = useState([]);
 
   const [addModal, setAddModal] = useState(false);
@@ -28,7 +30,9 @@ export default function UsersPage() {
   useEffect(() => {
     const fetchCameras = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/users`);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users`
+        );
 
         setUsers(res.data);
       } catch (err) {
@@ -43,6 +47,10 @@ export default function UsersPage() {
     <ProtectedRoutes allowedRoles={["admin", "user"]}>
       <div className={styles.cameras}>
         <div className={styles.title}>
+          <button className={styles.menu}>
+            <Menu onClick={() => setMenuOpen(true)} />
+          </button>
+
           <h1>Все пользователи</h1>
         </div>
 
@@ -51,7 +59,7 @@ export default function UsersPage() {
             <SaveToExcel />
 
             <button className={styles.addNew} onClick={() => setAddModal(true)}>
-              <PersonAddAlt1Icon /> Add new
+              <PersonAddAlt1Icon /> <p>Add new</p>
             </button>
           </div>
           <table id="myTable">
