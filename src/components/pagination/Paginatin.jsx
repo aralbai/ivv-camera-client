@@ -11,7 +11,14 @@ export default function Paginatin({ page, setPage, totalPages, totalCameras }) {
 
   return (
     <div className={styles.pagination}>
-      <button onClick={prevPage} disabled={page === 1}>
+      <button
+        onClick={prevPage}
+        disabled={page === 1}
+        style={{
+          opacity: page === 1 ? 0.5 : 1,
+          cursor: page === 1 ? "not-allowed" : "pointer",
+        }}
+      >
         Предыдущий
       </button>
 
@@ -25,7 +32,14 @@ export default function Paginatin({ page, setPage, totalPages, totalCameras }) {
         Всего камер: <b>{totalCameras}</b>
       </p>
 
-      <button onClick={nextPage} disabled={page === totalPages}>
+      <button
+        onClick={nextPage}
+        disabled={page === totalPages}
+        style={{
+          opacity: page === totalPages ? 0.5 : 1,
+          cursor: page === totalPages ? "not-allowed" : "pointer",
+        }}
+      >
         Следующий
       </button>
     </div>

@@ -1,10 +1,24 @@
-import Image from "next/image";
-import styles from "./page.module.scss";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useUserContext } from "@/context/UserContext";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <h1>Homepage</h1>
-    </div>
-  );
+  const { user } = useUserContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      if (user.role === "admin" || user.role === "user") {
+        router.push("/map");
+      } else {
+        router.push("/unauthorized");
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [user, router]);
+
+  return <div>Redirecting...</div>;
 }

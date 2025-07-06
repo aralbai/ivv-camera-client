@@ -115,6 +115,8 @@ export default function MapView() {
         setAddNewModalOpen={setAddNewModalOpen}
         filters={filters}
         setFilters={setFilters}
+        setAddNewClickOpen={setAddNewClickOpen}
+        setTempMarkerClick={setTempMarkerClick}
       />
 
       <MapContainer
@@ -136,6 +138,8 @@ export default function MapView() {
               setLongitude(lng.toFixed(6));
               setTempMarkerClick([lat, lng]);
               setAddNewClickOpen(true);
+              setAddNewModalOpen(false);
+              setTempMarker(null);
             }}
           />
         )}

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useUserContext } from "@/context/UserContext";
 import axios from "@/lib/axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function page() {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,9 +32,10 @@ export default function page() {
         user: "/map",
       };
 
+      toast.success("Logged in successfully");
       router.push(roleRoutes[res.data.user.role] || "/unauthorized");
     } catch (err) {
-      console.error("Login failed:", err);
+      toast.error(err?.response?.data?.message);
     }
   };
 
@@ -46,7 +48,7 @@ export default function page() {
 
         <form className={styles.box} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
-            <label htmlFor="">Username</label>
+            <label htmlFor="">Имя пользователя</label>
             <input
               type="text"
               value={username}
@@ -55,7 +57,7 @@ export default function page() {
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="">Password</label>
+            <label htmlFor="">Пароль</label>
             <div>
               <input
                 type={showPassword ? "text" : "password"}
@@ -70,7 +72,7 @@ export default function page() {
             </div>
           </div>
 
-          <button>Login</button>
+          <button>Войти</button>
         </form>
       </div>
     </div>
