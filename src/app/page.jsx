@@ -20,5 +20,21 @@ export default function Home() {
     }
   }, [user, router]);
 
-  return <div>Redirecting...</div>;
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: "0px",
+        left: "0px",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <h1 style={{ textAlign: "center" }}>Перенаправление...</h1>
+    </div>
+  );
 }

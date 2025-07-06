@@ -9,13 +9,18 @@ export default function Navbar({
   setFilters,
   setAddNewClickOpen,
   setTempMarkerClick,
+  totalCameras,
 }) {
   const { user } = useUserContext();
 
   return (
     <div className={styles.navbar}>
       <div className={styles.filterContainer}>
-        <FilterModal filters={filters} setFilters={setFilters} />
+        <FilterModal
+          filters={filters}
+          setFilters={setFilters}
+          totalCameras={totalCameras}
+        />
       </div>
 
       {user?.role === "admin" && (

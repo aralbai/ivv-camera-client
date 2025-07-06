@@ -32,7 +32,7 @@ export default function page() {
         user: "/map",
       };
 
-      toast.success("Logged in successfully");
+      toast.success(res.data?.message);
       router.push(roleRoutes[res.data.user.role] || "/unauthorized");
     } catch (err) {
       toast.error(err?.response?.data?.message);

@@ -5,6 +5,7 @@ import MapIcon from "@mui/icons-material/Map";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import axios from "@/lib/axios";
 import { useUserContext } from "@/context/UserContext";
 import { toast } from "react-toastify";
@@ -63,13 +64,15 @@ export default function Sidebar() {
 
       <ul className={styles.bottom}>
         <li>
-          <Link
-            onClick={handleLogout}
-            href="/login"
-            className={pathname.includes("/users") ? styles.active : ""}
-          >
+          <Link href="/">
+            <AccountCircleIcon />
+            {user.username}
+          </Link>
+        </li>
+        <li>
+          <Link onClick={handleLogout} href="/login">
             <LogoutIcon />
-            Logout
+            Выход
           </Link>
         </li>
       </ul>

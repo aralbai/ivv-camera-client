@@ -25,10 +25,9 @@ export default function DeleteModal({
       setDeleteModalOpen(false);
       setSelectedCamera(true);
       setDeletedCamereId("");
-      toast.success("Камера добавлена!");
+      toast.success(res.data?.message);
     } catch (err) {
-      console.log(err);
-      toast.error("Ошибка сервера!");
+      toast.error(err?.response?.data?.message);
     }
   };
 

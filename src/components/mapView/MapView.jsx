@@ -39,6 +39,7 @@ export default function MapView() {
   const [cameras, setCameras] = useState([]);
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
+  const [totalCameras, setTotalCameras] = useState(0);
 
   const [editableCamera, setEditableCamera] = useState();
 
@@ -81,6 +82,7 @@ export default function MapView() {
         );
 
         setCameras(res.data?.data);
+        setTotalCameras(res.data?.totalItems);
       } catch (err) {
         console.log(err);
       }
@@ -117,6 +119,7 @@ export default function MapView() {
         setFilters={setFilters}
         setAddNewClickOpen={setAddNewClickOpen}
         setTempMarkerClick={setTempMarkerClick}
+        totalCameras={totalCameras}
       />
 
       <MapContainer
@@ -124,6 +127,7 @@ export default function MapView() {
         center={[42.453, 59.6075]}
         zoom={12}
         // maxZoom={19}
+        zoomControl={false}
         style={{ height: "100%", width: "100%" }}
         whenCreated={(mapInstance) => {
           mapRef.current = mapInstance;

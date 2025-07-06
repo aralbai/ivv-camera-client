@@ -1,0 +1,101 @@
+.addNewModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h1 {
+        font-size: 15px;
+      }
+
+      button {
+        background: none;
+        color: #1976d2;
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+
+    form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .inputGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        input,
+        select {
+          border: 1px solid #d0d0d0;
+          outline: none;
+          padding: 10px;
+          border-radius: 5px;
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border: 1px solid #b1b0b4;
+          border-radius: 5px;
+          padding-right: 10px;
+
+          input {
+            width: 90%;
+            border: none;
+            padding: 10px;
+          }
+        }
+      }
+
+      p {
+        font-size: 14px;
+        color: red;
+      }
+
+      button {
+        color: white;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        font-size: 15px;
+        background-color: white;
+        border: 1px solid #1976d2;
+        color: #1976d2;
+
+        &:last-child {
+          background-color: #1976d2;
+          color: white;
+        }
+      }
+    }
+  }
+}

@@ -106,10 +106,9 @@ export default function EditCameraModal({
       setEditModalOpen(false);
       setEditableCamera(null);
       setSelectedCamera(true);
-      toast.success("Камера добавлена!");
+      toast.success(res.data?.message);
     } catch (err) {
-      console.log(err);
-      toast.error("Ошибка сервера!");
+      toast.error(err?.response?.data?.message);
     }
   };
 
@@ -125,7 +124,7 @@ export default function EditCameraModal({
     <div className={styles.addNewModal}>
       <div className={styles.card}>
         <div className={styles.top}>
-          <h1>Добавить новую камеру</h1>
+          <h1>Редактировать камеру</h1>
           <button
             onClick={() => {
               setEditModalOpen(false);

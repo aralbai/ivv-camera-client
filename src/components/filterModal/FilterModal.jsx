@@ -30,14 +30,25 @@ const names = [
   },
 ];
 
-export default function FilterModal({ filters, setFilters }) {
+const cameraTypes = {
+  all: "Все",
+  ptz: "ПТЗ камера",
+  obz: "Обзорний камера",
+  lis: " Распознавание лиц",
+  avto: "Распознавание авто номер",
+  radar: "Радар",
+};
+
+export default function FilterModal({ filters, setFilters, totalCameras }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className={styles.filterModal}>
       <div className={styles.filter} onClick={() => setModalOpen(!modalOpen)}>
         <FilterListIcon />
-        <p>Фильтр</p>
+        <p>
+          {cameraTypes[filters.cameraType]}: {totalCameras}
+        </p>
       </div>
 
       {modalOpen && (

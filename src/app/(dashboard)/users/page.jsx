@@ -9,18 +9,21 @@ import SaveToExcel from "@/components/saveToExcel/SaveToExcel";
 import { useUserContext } from "@/context/UserContext";
 import ProtectedRoutes from "@/components/protectedRoutes/ProtectedRoutes";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import AddUserModal from "@/components/users/addUserModal/AddUserModal";
+import DeleteUserModal from "@/components/users/deleteUserModal/DeleteUserModal";
+import EditUserModal from "@/components/users/editUserModal/EditUserModal";
 
 export default function UsersPage() {
   const { user } = useUserContext();
   const [users, setUsers] = useState([]);
 
-  const [addModal, setAddModal] = useState(true);
+  const [addModal, setAddModal] = useState(false);
 
   const [editModal, setEditModal] = useState(false);
-  const [selectedCamera, setSelectedCamera] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
 
   const [deleteModal, setDeleteModal] = useState(false);
-  const [selectedCameraId, setSelectedCameraId] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState("");
 
   useEffect(() => {
     const fetchCameras = async () => {
@@ -34,7 +37,7 @@ export default function UsersPage() {
     };
 
     fetchCameras();
-  }, [deleteModal, editModal]);
+  }, [addModal, deleteModal, editModal]);
 
   return (
     <ProtectedRoutes allowedRoles={["admin", "user"]}>
@@ -47,7 +50,7 @@ export default function UsersPage() {
           <div className={styles.top}>
             <SaveToExcel />
 
-            <button className={styles.addNew}>
+            <button className={styles.addNew} onClick={() => setAddModal(true)}>
               <PersonAddAlt1Icon /> Add new
             </button>
           </div>
@@ -75,7 +78,7 @@ export default function UsersPage() {
                         <button
                           onClick={() => {
                             setEditModal(true);
-                            setSelectedCamera(u);
+                            setSelectedUser(u);
                           }}
                         >
                           <Edit />
@@ -83,7 +86,7 @@ export default function UsersPage() {
                         <button
                           onClick={() => {
                             setDeleteModal(true);
-                            setSelectedCameraId(u._id);
+                            setSelectedUserId(u._id);
                           }}
                         >
                           <Delete />
@@ -95,6 +98,26 @@ export default function UsersPage() {
               ))}
             </tbody>
           </table>
+
+          {addModal && <AddUserModal setAddModal={setAddModal} />}
+
+          {deleteModal && (
+            <DeleteUserModal
+              selectedUserId={selectedUserId}
+              setSelectedUserId={setSelectedUserId}
+              setDeleteModal={setDeleteModal}
+              users={users}
+              setUsers={setUsers}
+            />
+          )}
+
+          {editModal && (
+            <EditUserModal
+              setEditModal={setEditModal}
+              setSelectedUser={setSelectedUser}
+              selectedUser={selectedUser}
+            />
+          )}
         </div>
       </div>
     </ProtectedRoutes>

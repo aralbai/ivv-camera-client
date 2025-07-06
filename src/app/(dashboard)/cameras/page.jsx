@@ -68,7 +68,11 @@ export default function CamerasPage() {
 
         <div className={styles.tableContainer}>
           <div className={styles.top}>
-            <FilterModal filters={filters} setFilters={setFilters} />
+            <FilterModal
+              filters={filters}
+              setFilters={setFilters}
+              totalCameras={totalCameras}
+            />
 
             <SaveToExcel />
           </div>
