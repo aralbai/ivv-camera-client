@@ -16,7 +16,7 @@ import DeleteModal from "../deleteModal/DeleteModal";
 import LocationPinIcon from "@mui/icons-material/LocationPin";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useUserContext } from "@/context/UserContext";
-import Loading from "../loading/Loading";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -259,6 +259,10 @@ export default function MapView() {
           </Marker>
         )}
       </MapContainer>
+
+      <div className={refresh}>
+        <RefreshIcon />
+      </div>
 
       {addNewModalOpen && (
         <AddNewModal
