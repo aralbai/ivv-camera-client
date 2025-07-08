@@ -41,6 +41,8 @@ export default function EditCameraModal({
   const [longitude, setLongitude] = useState("");
   const [error, setError] = useState("");
 
+  const [closing, setClosing] = useState(false);
+
   const handleError = (lat, long) => {
     let newErrors = "";
     let hasError = false;
@@ -121,7 +123,11 @@ export default function EditCameraModal({
   }, [editableCamera]);
 
   return (
-    <div className={styles.addNewModal}>
+    <div
+      className={
+        closing ? `${styles.addNewModalClosing}` : `${styles.addNewModal}`
+      }
+    >
       <div className={styles.card}>
         <div className={styles.top}>
           <h1>Редактировать камеру</h1>
@@ -134,6 +140,10 @@ export default function EditCameraModal({
           >
             <Close />
           </button>
+        </div>
+
+        <div className={styles.closer} onClick={() => setClosing(!closing)}>
+          <p></p>
         </div>
 
         <form onSubmit={handleSubmit}>

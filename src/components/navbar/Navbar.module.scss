@@ -7,16 +7,18 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  height: 60px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 5px 5px -3px,
+    rgba(0, 0, 0, 0.043) 0px 8px 10px 1px, rgba(0, 0, 0, 0.035) 0px 3px 14px 2px;
 
   .menu {
-    background-color: white;
+    background: none;
     border: none;
-    padding: 5px 10px;
     cursor: pointer;
   }
 
   .filterContainer {
-    background-color: white;
     padding: 10px 20px;
     border-radius: 5px;
   }
@@ -24,7 +26,6 @@
   .addNew {
     background-color: #1976d2;
     color: white;
-    padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     border: none;
@@ -32,13 +33,13 @@
     align-items: center;
     gap: 10px;
     font-size: 15px;
+    padding: 10px 20px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .navbar {
     padding: 10px;
-    gap: 10px;
 
     .menu {
       padding: 5px;
@@ -49,7 +50,7 @@
     }
 
     .addNew {
-      padding: 5px;
+      padding: 10px;
 
       p {
         display: none;

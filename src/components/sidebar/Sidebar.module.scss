@@ -3,15 +3,13 @@
   width: 250px;
   background-color: #232a44;
   padding: 20px;
+  padding-bottom: 80px;
   color: white;
   height: 100vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.5s ease;
-  position: fixed;
-  z-index: 99999999;
 
   .top {
     position: relative;
@@ -72,10 +70,20 @@
   }
 }
 
-.sidebarOpen {
-  margin-left: 0;
-}
+@media screen and (max-width: 1200px) {
+  .sidebar,
+  .sidebarOpen {
+    position: fixed;
+    transition: all 0.5s ease;
+    z-index: 99999999;
+    margin-left: 0;
+  }
 
-.sidebar {
-  margin-left: -250px;
+  .sidebarOpen {
+    margin-left: 0;
+  }
+
+  .sidebar {
+    margin-left: -250px;
+  }
 }

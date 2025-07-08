@@ -1,4 +1,6 @@
 import styles from "./Pagination.module.scss";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export default function Paginatin({ page, setPage, totalPages, totalCameras }) {
   const nextPage = () => {
@@ -11,37 +13,35 @@ export default function Paginatin({ page, setPage, totalPages, totalCameras }) {
 
   return (
     <div className={styles.pagination}>
-      <button
-        onClick={prevPage}
-        disabled={page === 1}
-        style={{
-          opacity: page === 1 ? 0.5 : 1,
-          cursor: page === 1 ? "not-allowed" : "pointer",
-        }}
-      >
-        Предыдущий
-      </button>
+      <p>Текущая страница: {page}</p>
+      <p>Всего страниц: {totalPages}</p>
+      <p>Всего камер: {totalCameras}</p>
 
-      <p>
-        Текущая страница: <b>{page}</b>
-      </p>
-      <p>
-        Всего страниц: <b>{totalPages}</b>
-      </p>
-      <p>
-        Всего камер: <b>{totalCameras}</b>
-      </p>
+      <div className={styles.buttons}>
+        <button
+          onClick={prevPage}
+          disabled={page === 1}
+          style={{
+            opacity: page === 1 ? 0.5 : 1,
+            cursor: page === 1 ? "not-allowed" : "pointer",
+          }}
+        >
+          <ArrowBackIosIcon />
+          <p>Предыдущий</p>
+        </button>
 
-      <button
-        onClick={nextPage}
-        disabled={page === totalPages}
-        style={{
-          opacity: page === totalPages ? 0.5 : 1,
-          cursor: page === totalPages ? "not-allowed" : "pointer",
-        }}
-      >
-        Следующий
-      </button>
+        <button
+          onClick={nextPage}
+          disabled={page === totalPages}
+          style={{
+            opacity: page === totalPages ? 0.5 : 1,
+            cursor: page === totalPages ? "not-allowed" : "pointer",
+          }}
+        >
+          <p>Следующий</p>
+          <ArrowForwardIosIcon />
+        </button>
+      </div>
     </div>
   );
 }

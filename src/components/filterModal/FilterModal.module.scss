@@ -63,15 +63,8 @@
 
 @media screen and (max-width: 600px) {
   .filterModal {
-    .filter {
-      svg {
-        display: none;
-      }
-    }
-
     .main {
       top: 30px;
-      // left: ;
       flex-direction: column;
       height: max-content;
 

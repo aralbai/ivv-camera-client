@@ -1,7 +1,7 @@
 .cameras {
-  padding: 20px;
-
   .title {
+    height: 60px;
+    padding: 10px;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -25,66 +25,72 @@
     }
   }
 
-  .tableContainer {
+  .container {
+    margin: 20px;
     background-color: #fff;
-    overflow-x: auto;
-    max-width: 100%;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 3px 3px -2px,
       rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px !important;
 
     .top {
-      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 20px;
 
       .addNew {
         background-color: #1976d2;
-        color: white;
         padding: 10px 20px;
-        cursor: pointer;
-        border-radius: 5px;
         border: none;
+        border-radius: 5px;
+        cursor: pointer;
         display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 15px;
+        color: white;
       }
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .tableContainer {
+      margin: 10px;
 
-      tr {
-        td {
-          border-bottom: 1px solid #e3e3e3;
-          padding: 10px;
+      overflow-x: auto;
+      max-width: 100%;
+      border-radius: 5px;
 
-          &:first-child {
-            padding-left: 20px;
+      table {
+        width: 100%;
+        border-collapse: collapse;
 
-            img {
-              width: 35px;
+        tr {
+          td {
+            border-bottom: 1px solid #e3e3e3;
+            padding: 10px;
+
+            &:first-child {
+              padding-left: 20px;
+
+              img {
+                width: 35px;
+              }
             }
           }
-        }
 
-        .action {
-          display: flex;
-          gap: 10px;
-
-          button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+          .action {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            gap: 10px;
+
+            button {
+              background: none;
+              border: none;
+              cursor: pointer;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
           }
         }
       }
@@ -94,14 +100,16 @@
 
 @media screen and (max-width: 600px) {
   .cameras {
-    padding: 10px;
+    .container {
+      margin: 10px;
 
-    .tableContainer {
       .top {
-        .addNew {
-          p {
-            display: none;
-          }
+        padding: 10px;
+      }
+
+      .tableContainer {
+        .top {
+          flex-direction: column;
         }
       }
     }

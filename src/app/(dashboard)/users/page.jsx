@@ -54,7 +54,7 @@ export default function UsersPage() {
           <h1>Все пользователи</h1>
         </div>
 
-        <div className={styles.tableContainer}>
+        <div className={styles.container}>
           <div className={styles.top}>
             <SaveToExcel />
 
@@ -62,50 +62,53 @@ export default function UsersPage() {
               <PersonAddAlt1Icon /> <p>Add new</p>
             </button>
           </div>
-          <table id="myTable">
-            <thead>
-              <tr>
-                <td>Имя пользователя</td>
-                <td>Роль</td>
-                <td>Дата добавления</td>
-                {user?.role === "admin" && <td></td>}
-              </tr>
-            </thead>
 
-            <tbody>
-              {users.map((u) => (
-                <tr key={u._id}>
-                  <td>{u.username}</td>
-                  <td>{u.role}</td>
-                  <td>
-                    {u?.createdAt ? format(u?.createdAt, "dd.MM.yyyy") : ""}
-                  </td>
-                  {user?.role === "admin" && (
-                    <td>
-                      <div className={styles.action}>
-                        <button
-                          onClick={() => {
-                            setEditModal(true);
-                            setSelectedUser(u);
-                          }}
-                        >
-                          <Edit />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setDeleteModal(true);
-                            setSelectedUserId(u._id);
-                          }}
-                        >
-                          <Delete />
-                        </button>
-                      </div>
-                    </td>
-                  )}
+          <div className={styles.tableContainer}>
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <td>Имя пользователя</td>
+                  <td>Роль</td>
+                  <td>Дата добавления</td>
+                  {user?.role === "admin" && <td></td>}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {users.map((u) => (
+                  <tr key={u._id}>
+                    <td>{u.username}</td>
+                    <td>{u.role}</td>
+                    <td>
+                      {u?.createdAt ? format(u?.createdAt, "dd.MM.yyyy") : ""}
+                    </td>
+                    {user?.role === "admin" && (
+                      <td>
+                        <div className={styles.action}>
+                          <button
+                            onClick={() => {
+                              setEditModal(true);
+                              setSelectedUser(u);
+                            }}
+                          >
+                            <Edit />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setDeleteModal(true);
+                              setSelectedUserId(u._id);
+                            }}
+                          >
+                            <Delete />
+                          </button>
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           {addModal && <AddUserModal setAddModal={setAddModal} />}
 

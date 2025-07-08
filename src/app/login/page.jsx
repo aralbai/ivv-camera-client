@@ -10,6 +10,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function page() {
+  const [loading, setLoading] = useState(true);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
@@ -22,6 +24,8 @@ export default function page() {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       const res = await axios.post("/auth/login", { username, password });
 
       setUser(res.data.user);
@@ -36,6 +40,8 @@ export default function page() {
       router.push(roleRoutes[res.data.user.role] || "/unauthorized");
     } catch (err) {
       toast.error(err?.response?.data?.message);
+    } finally {
+      setLoading(false);
     }
   };
 

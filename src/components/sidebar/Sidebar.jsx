@@ -43,6 +43,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <Link
               href="/map"
               className={pathname.includes("/map") ? styles.active : ""}
+              onClick={() => setMenuOpen(false)}
             >
               <MapIcon />
               Карта
@@ -52,6 +53,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <Link
               href="/cameras"
               className={pathname.includes("/cameras") ? styles.active : ""}
+              onClick={() => setMenuOpen(false)}
             >
               <VideocamIcon />
               Камеры
@@ -62,6 +64,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <Link
                 href="/users"
                 className={pathname.includes("/users") ? styles.active : ""}
+                onClick={() => setMenuOpen(false)}
               >
                 <PeopleAltIcon />
                 Пользователи
@@ -73,7 +76,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
       <ul className={styles.bottom}>
         <li>
-          <Link href="/">
+          <Link href="/" onClick={() => setMenuOpen(false)}>
             <AccountCircleIcon />
             {user.username}
           </Link>

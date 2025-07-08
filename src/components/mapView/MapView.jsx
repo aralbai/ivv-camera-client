@@ -16,6 +16,7 @@ import DeleteModal from "../deleteModal/DeleteModal";
 import LocationPinIcon from "@mui/icons-material/LocationPin";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useUserContext } from "@/context/UserContext";
+import Loading from "../loading/Loading";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -215,11 +216,11 @@ export default function MapView() {
               popupAnchor: [0, -32],
             })}
           >
-            <Popup>
+            {/* <Popup>
               <strong>Новое место</strong>
               <br />
               {tempMarker.address}
-            </Popup>
+            </Popup> */}
           </Marker>
         )}
 
@@ -233,10 +234,10 @@ export default function MapView() {
               popupAnchor: [0, -32],
             })}
           >
-            <Popup>
+            {/* <Popup>
               <strong>Yangi joy</strong>
               <br />
-            </Popup>
+            </Popup> */}
           </Marker>
         )}
 
@@ -251,10 +252,10 @@ export default function MapView() {
               popupAnchor: [0, -32],
             })}
           >
-            <Popup>
+            {/* <Popup>
               <strong>Yangi joy</strong>
               <br />
-            </Popup>
+            </Popup> */}
           </Marker>
         )}
       </MapContainer>

@@ -4,10 +4,18 @@
   width: 100%;
 
   .main {
-    width: 100vw;
+    width: calc(100vw - 250px);
     position: relative;
     background-color: #fafafa;
     height: 100vh;
     overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .dashboardLayout {
+    .main {
+      width: 100vw;
+    }
   }
 }

@@ -36,6 +36,8 @@ export default function AddNewClick({
   const [cameraType, setCameraType] = useState("");
   const [address, setAddress] = useState("");
 
+  const [closing, setClosing] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const lat = parseFloat(latitude);
@@ -63,7 +65,11 @@ export default function AddNewClick({
   };
 
   return (
-    <div className={styles.addNewModal}>
+    <div
+      className={
+        closing ? `${styles.addNewModalClosing}` : `${styles.addNewModal}`
+      }
+    >
       <div className={styles.card}>
         <div className={styles.top}>
           <h1>Добавить новую камеру</h1>
@@ -75,6 +81,10 @@ export default function AddNewClick({
           >
             <Close />
           </button>
+        </div>
+
+        <div className={styles.closer} onClick={() => setClosing(!closing)}>
+          <p></p>
         </div>
 
         <form onSubmit={handleSubmit}>

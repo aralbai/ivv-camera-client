@@ -1,9 +1,11 @@
-.addNewModal {
+.addNewModal,
+.addNewModalClosing {
   width: 300px;
   position: fixed;
-  top: 100px;
-  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 999;
+  transition: all 0.5s ease;
 
   .card {
     background-color: white;
@@ -11,6 +13,7 @@
     border-radius: 8px;
     width: 300px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
 
     .top {
       display: flex;
@@ -32,6 +35,34 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+      }
+    }
+
+    .closer {
+      width: 20px;
+      height: 60px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -20px;
+      background-color: #fff;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+      -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+      box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        width: 0;
+        height: 0;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-right: 7px solid black;
+        z-index: 1;
       }
     }
 
@@ -78,4 +109,12 @@
       }
     }
   }
+}
+
+.addNewModal {
+  left: 0;
+}
+
+.addNewModalClosing {
+  left: -300px;
 }

@@ -72,7 +72,7 @@ export default function CamerasPage() {
           <h1>Все камеры</h1>
         </div>
 
-        <div className={styles.tableContainer}>
+        <div className={styles.container}>
           <div className={styles.top}>
             <FilterModal
               filters={filters}
@@ -82,63 +82,66 @@ export default function CamerasPage() {
 
             <SaveToExcel />
           </div>
-          <table id="myTable">
-            <thead>
-              <tr>
-                <td>Икона</td>
-                <td>Тип камеры</td>
-                <td>Адрес</td>
-                <td>Широта</td>
-                <td>Долгота</td>
-                <td>Дата добавления</td>
-                {user?.role === "admin" && <td></td>}
-              </tr>
-            </thead>
 
-            <tbody>
-              {cameras.map((camera) => (
-                <tr key={camera._id}>
-                  <td>
-                    <img
-                      src={
-                        camera.cameraType === "obz"
-                          ? `/ptz.png`
-                          : `/${camera.cameraType}.png`
-                      }
-                      alt=""
-                    />
-                  </td>
-                  <td>{`${names[camera.cameraType]}`}</td>
-                  <td>{camera.address}</td>
-                  <td>{camera.position[1]}</td>
-                  <td>{camera.position[0]}</td>
-                  <td>{format(camera.createdAt, "dd.MM.yyyy")}</td>
-                  {user?.role === "admin" && (
-                    <td>
-                      <div className={styles.action}>
-                        <button
-                          onClick={() => {
-                            setEditModal(true);
-                            setSelectedCamera(camera);
-                          }}
-                        >
-                          <Edit />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setDeleteModal(true);
-                            setSelectedCameraId(camera._id);
-                          }}
-                        >
-                          <Delete />
-                        </button>
-                      </div>
-                    </td>
-                  )}
+          <div className={styles.tableContainer}>
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <td>Икона</td>
+                  <td>Тип камеры</td>
+                  <td>Адрес</td>
+                  <td>Широта</td>
+                  <td>Долгота</td>
+                  <td>Дата добавления</td>
+                  {user?.role === "admin" && <td></td>}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {cameras.map((camera) => (
+                  <tr key={camera._id}>
+                    <td>
+                      <img
+                        src={
+                          camera.cameraType === "obz"
+                            ? `/ptz.png`
+                            : `/${camera.cameraType}.png`
+                        }
+                        alt=""
+                      />
+                    </td>
+                    <td>{`${names[camera.cameraType]}`}</td>
+                    <td>{camera.address}</td>
+                    <td>{camera.position[1]}</td>
+                    <td>{camera.position[0]}</td>
+                    <td>{format(camera.createdAt, "dd.MM.yyyy")}</td>
+                    {user?.role === "admin" && (
+                      <td>
+                        <div className={styles.action}>
+                          <button
+                            onClick={() => {
+                              setEditModal(true);
+                              setSelectedCamera(camera);
+                            }}
+                          >
+                            <Edit />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setDeleteModal(true);
+                              setSelectedCameraId(camera._id);
+                            }}
+                          >
+                            <Delete />
+                          </button>
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <Paginatin
             page={page}
