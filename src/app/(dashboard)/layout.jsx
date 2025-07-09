@@ -9,8 +9,6 @@ import { Menu } from "@mui/icons-material";
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  console.log(sidebarOpen);
-
   return (
     <ProtectedRoutes allowedRoles={["admin", "user"]}>
       <div className={styles.dashboardLayout}>

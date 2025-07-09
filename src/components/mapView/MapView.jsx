@@ -60,7 +60,6 @@ export default function MapView() {
     setTempMarker(marker);
 
     if (mapRef.current) {
-      console.log(mapRef);
       mapRef.current.flyTo(marker.position, 15, {
         duration: 1,
       });

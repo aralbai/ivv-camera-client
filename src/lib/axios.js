@@ -48,9 +48,6 @@ instance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        // 👇 Bu yerga qo‘ying
-        console.log("⏳ Access token expired. Refreshing...");
-
         const newToken = await refreshAccessToken();
         instance.defaults.headers.common[
           "Authorization"
