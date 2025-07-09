@@ -3,20 +3,20 @@
 import styles from "./MapView.module.scss";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import Navbar from "../navbar/Navbar";
 import AddNewModal from "../addNewModal/AddNewModal";
 import axios from "axios";
 import DblClickHandler from "../dblClickHandler/DblClickHandler";
 import AddNewClick from "../addNewClick/AddNewClick";
-import { Delete, Edit } from "@mui/icons-material";
 import EditCameraModal from "../editCameraModal/EditCameraModal";
 import DeleteModal from "../deleteModal/DeleteModal";
 import LocationPinIcon from "@mui/icons-material/LocationPin";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useUserContext } from "@/context/UserContext";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import { useRouter } from "next/navigation";
 
 const names = {
   ptz: "ПТЗ камера",
@@ -28,6 +28,7 @@ const names = {
 
 export default function MapView() {
   const { user } = useUserContext();
+  const router = useRouter();
   const [addNewModalOpen, setAddNewModalOpen] = useState(false);
   const [addNewClickOpen, setAddNewClickOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -52,6 +53,7 @@ export default function MapView() {
     startDate: new Date("2025-01-01"),
     endDate: new Date(),
   });
+
   const mapRef = useRef(null);
 
   const handlePreviewMarker = (marker) => {
@@ -91,6 +93,10 @@ export default function MapView() {
 
     fetchCameras();
   }, [filters, addNewModalOpen, addNewClickOpen, editModalOpen]);
+
+  const handleRefreshPage = () => {
+    window.location.reload();
+  };
 
   const getCameraIcon = (type) => {
     let iconUrl = "/icons/camera.png";
@@ -260,8 +266,10 @@ export default function MapView() {
         )}
       </MapContainer>
 
-      <div className={refresh}>
-        <RefreshIcon />
+      <div className={styles.refresh}>
+        <button onClick={handleRefreshPage}>
+          <RefreshIcon />
+        </button>
       </div>
 
       {addNewModalOpen && (
