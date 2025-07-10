@@ -36,7 +36,6 @@ export default function EditCameraModal({
 }) {
   const [cameraType, setCameraType] = useState("");
   const [cameraId, setCameraId] = useState("");
-  const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [error, setError] = useState("");
@@ -69,7 +68,6 @@ export default function EditCameraModal({
   };
 
   const handleShow = (e) => {
-    e.preventDefault();
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
 
@@ -80,7 +78,6 @@ export default function EditCameraModal({
       _id: cameraId,
       position: [lat, long],
       cameraType,
-      address,
     };
 
     onPreviewMarker(newCamera);
@@ -94,7 +91,6 @@ export default function EditCameraModal({
 
     const data = {
       cameraType: cameraType,
-      address: address,
       longitude: long,
       latitude: lat,
     };
@@ -117,7 +113,6 @@ export default function EditCameraModal({
   useEffect(() => {
     setCameraId(editableCamera?._id);
     setCameraType(editableCamera?.cameraType);
-    setAddress(editableCamera?.address);
     setLatitude(editableCamera?.position[0]);
     setLongitude(editableCamera?.position[1]);
   }, [editableCamera]);
@@ -163,16 +158,6 @@ export default function EditCameraModal({
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="">Адрес</label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
           </div>
 
           <div className={styles.inputGroup}>

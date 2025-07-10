@@ -16,6 +16,10 @@
     background: none;
     border: none;
     cursor: pointer;
+
+    svg {
+      display: none;
+    }
   }
 
   .filterContainer {
@@ -34,6 +38,16 @@
     gap: 10px;
     font-size: 15px;
     padding: 10px 20px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .navbar {
+    .menu {
+      svg {
+        display: block;
+      }
+    }
   }
 }
 

@@ -1,9 +1,9 @@
 "use client";
 
 import styles from "./MapView.module.scss";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import Navbar from "../navbar/Navbar";
 import AddNewModal from "../addNewModal/AddNewModal";
@@ -12,23 +12,14 @@ import DblClickHandler from "../dblClickHandler/DblClickHandler";
 import AddNewClick from "../addNewClick/AddNewClick";
 import EditCameraModal from "../editCameraModal/EditCameraModal";
 import DeleteModal from "../deleteModal/DeleteModal";
-import LocationPinIcon from "@mui/icons-material/LocationPin";
-import LanguageIcon from "@mui/icons-material/Language";
 import { useUserContext } from "@/context/UserContext";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { useRouter } from "next/navigation";
-
-const names = {
-  ptz: "ПТЗ камера",
-  obz: "Обзорний камера",
-  lis: " Распознавание лиц",
-  avto: "Распознавание авто номер",
-  radar: "Радар",
-};
+import SingleCamera from "../singleCamera/SingleCamera";
+import LayersIcon from "@mui/icons-material/Layers";
+import LayersClearIcon from "@mui/icons-material/LayersClear";
 
 export default function MapView() {
   const { user } = useUserContext();
-  const router = useRouter();
   const [addNewModalOpen, setAddNewModalOpen] = useState(false);
   const [addNewClickOpen, setAddNewClickOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -50,11 +41,54 @@ export default function MapView() {
 
   const [filters, setFilters] = useState({
     cameraType: "all",
+    district: "all",
+    mahalla: "all",
     startDate: new Date("2025-01-01"),
     endDate: new Date(),
   });
 
+  // STATE FOR GEOJSON
+  const [geojsonData, setGeojsonData] = useState(null);
+  const [geojsonLayer, setGeojsonLayer] = useState(false);
+
   const mapRef = useRef(null);
+
+  useEffect(() => {
+    fetch("/data/qoraqalpogiston.geojson")
+      .then((res) => res.json())
+      .then((data) => setGeojsonData(data));
+  }, []);
+
+  const filteredGeojson = useMemo(() => {
+    if (!geojsonData) return null;
+
+    const filteredFeatures = geojsonData.features.filter((feature) => {
+      const props = feature.properties;
+
+      const districtMatch =
+        filters.district !== "all" ? props.district === filters.district : true;
+
+      const mahallaMatch =
+        filters.mahalla !== "all" ? props.mahalla_no === filters.mahalla : true;
+
+      return districtMatch && mahallaMatch;
+    });
+
+    return {
+      ...geojsonData,
+      features: filteredFeatures,
+    };
+  }, [geojsonData, filters, filters]);
+
+  const onEachFeature = (feature, layer) => {
+    if (feature.properties && feature.properties.mahalla_no) {
+      layer.bindTooltip(feature.properties.mahalla_no, {
+        permanent: true,
+        direction: "center",
+        className: "mahalla-label",
+      });
+    }
+  };
 
   const handlePreviewMarker = (marker) => {
     setTempMarker(marker);
@@ -80,7 +114,7 @@ export default function MapView() {
     const fetchCameras = async () => {
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cameras?cameraType=${filters.cameraType}&district=${filters.district}&mahalla=${filters.mahalla}&startDate=${filters.startDate}&endDate=${filters.endDate}`
         );
 
         setCameras(res.data?.data);
@@ -91,7 +125,7 @@ export default function MapView() {
     };
 
     fetchCameras();
-  }, [filters, addNewModalOpen, addNewClickOpen, editModalOpen]);
+  }, [filters, addNewModalOpen, addNewClickOpen, editModalOpen, deleteModal]);
 
   const handleRefreshPage = () => {
     window.location.reload();
@@ -132,7 +166,6 @@ export default function MapView() {
         ref={mapRef}
         center={[42.453, 59.6075]}
         zoom={12}
-        // maxZoom={19}
         zoomControl={false}
         style={{ height: "100%", width: "100%" }}
         whenCreated={(mapInstance) => {
@@ -157,96 +190,63 @@ export default function MapView() {
           attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {cameras.map((camera, i) => (
+
+        {/* SEPARATION MAHALLAS WITH GEOJSON FILE  */}
+        {geojsonLayer && filteredGeojson && (
+          <GeoJSON
+            key={JSON.stringify(filters)}
+            data={filteredGeojson}
+            onEachFeature={onEachFeature}
+          />
+        )}
+
+        {/* CAMERA MARKERS FOR ALL CAMERAS WITH ICONS  */}
+        {cameras.map((camera) => (
           <Marker
-            key={i}
+            key={camera._id}
             position={[camera.position[1], camera.position[0]]} // [lat, lon]
             icon={getCameraIcon(camera.cameraType)}
           >
             {selectedCamera && (
-              <Popup>
-                <div className={styles.cameraOption}>
-                  <h1>{names[camera.cameraType]}</h1>
-                  <p>
-                    <LocationPinIcon /> <b>{camera.address}</b>
-                  </p>
-                  <p>
-                    <LanguageIcon /> Широта: <b>{camera.position[1]}</b>
-                  </p>
-                  <p>
-                    <LanguageIcon /> Долгота: <b>{camera.position[0]}</b>
-                  </p>
-
-                  {user?.role === "admin" && (
-                    <div>
-                      <button
-                        onClick={() => {
-                          setEditModalOpen(!editModalOpen);
-                          setSelectedCamera(false);
-                          setEditableCamera({
-                            _id: camera._id,
-                            position: [camera.position[1], camera.position[0]],
-                            cameraType: camera.cameraType,
-                            address: camera.address,
-                          });
-                        }}
-                      >
-                        Редактировать
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          setDeleteModal(!deleteModal);
-                          setSelectedCamera(false);
-                          setDeletedCamereId(camera._id);
-                        }}
-                      >
-                        Удалить
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </Popup>
+              <SingleCamera
+                camera={camera}
+                setEditModalOpen={setEditModalOpen}
+                editModalOpen={editModalOpen}
+                setSelectedCamera={setSelectedCamera}
+                setEditableCamera={setEditableCamera}
+                setDeleteModal={setDeleteModal}
+                setDeletedCamereId={setDeletedCamereId}
+              />
             )}
           </Marker>
         ))}
-
+        {/* BLUE LOCATION MARKER FOR  SHOWING NEW CAMERA'S LOCATION  */}
+        {/* ADDING WITH ADD BUTTON  */}
         {tempMarker && (
           <Marker
             position={tempMarker.position}
             icon={L.icon({
-              iconUrl: "/newCamera.png", // vaqtinchalik marker uchun alohida rasm
+              iconUrl: "/newCamera.png",
               iconSize: [40, 40],
               iconAnchor: [16, 32],
               popupAnchor: [0, -32],
             })}
-          >
-            {/* <Popup>
-              <strong>Новое место</strong>
-              <br />
-              {tempMarker.address}
-            </Popup> */}
-          </Marker>
+          ></Marker>
         )}
-
+        {/* BLUE LOCATION MARKER FOR  SHOWING NEW CAMERA'S LOCATION  */}
+        {/* ADDING WITH DOUBLE CLICK  */}
         {tempMarkerClick && (
           <Marker
             position={tempMarkerClick}
             icon={L.icon({
-              iconUrl: "/newCamera.png", // vaqtinchalik marker uchun alohida rasm
+              iconUrl: "/newCamera.png",
               iconSize: [40, 40],
               iconAnchor: [16, 32],
               popupAnchor: [0, -32],
             })}
-          >
-            {/* <Popup>
-              <strong>Yangi joy</strong>
-              <br />
-            </Popup> */}
-          </Marker>
+          ></Marker>
         )}
-
-        {/* MARKER FOR EDIT CAMERA 1 */}
+        {/* RED LOCATION MARKER FOR SHOWING EDITABLE CAMERA'S NEW LOCATION */}
         {editableCamera && (
           <Marker
             position={editableCamera.position}
@@ -265,12 +265,21 @@ export default function MapView() {
         )}
       </MapContainer>
 
+      {/* TURN ON/OFF GEOJSON  */}
+      <div className={styles.geojsonLayer}>
+        <button onClick={() => setGeojsonLayer(!geojsonLayer)}>
+          {geojsonLayer ? <LayersIcon /> : <LayersClearIcon />}
+        </button>
+      </div>
+
+      {/* REFRESH ICON FOR REFRESH THIS PAGE  */}
       <div className={styles.refresh}>
         <button onClick={handleRefreshPage}>
           <RefreshIcon />
         </button>
       </div>
 
+      {/* ADD MODAL FOR ADD NEW BUTTON AND INPUTS  */}
       {addNewModalOpen && (
         <AddNewModal
           setAddNewModalOpen={setAddNewModalOpen}
@@ -279,6 +288,7 @@ export default function MapView() {
         />
       )}
 
+      {/* ADD MODAL FOR DOUBLE CLICK  */}
       {addNewClickOpen && (
         <AddNewClick
           setAddNewClickOpen={setAddNewClickOpen}
@@ -288,6 +298,7 @@ export default function MapView() {
         />
       )}
 
+      {/* OPEN EDIT MODAL FOR EDITING CAMERA FROM HERE  */}
       {editModalOpen && (
         <EditCameraModal
           setEditModalOpen={setEditModalOpen}
@@ -298,6 +309,7 @@ export default function MapView() {
         />
       )}
 
+      {/* OPEN DELETE MODAL FOR DELETING CAMERA FROM HERE */}
       {deleteModal && (
         <DeleteModal
           deletedCameraId={deletedCameraId}

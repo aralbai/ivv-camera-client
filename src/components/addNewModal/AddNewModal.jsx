@@ -33,13 +33,13 @@ export default function AddNewModal({
   setTempMarker,
 }) {
   const [cameraType, setCameraType] = useState("");
-  const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [error, setError] = useState("");
 
   const [closing, setClosing] = useState(false);
 
+  // CHECK LATITUDE AND LONGITUDE HERE
   const handleError = (lat, long) => {
     let newErrors = "";
     let hasError = false;
@@ -66,7 +66,6 @@ export default function AddNewModal({
   };
 
   const handleShow = (e) => {
-    e.preventDefault();
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
 
@@ -76,7 +75,6 @@ export default function AddNewModal({
     const newCamera = {
       position: [lat, long],
       cameraType,
-      address,
     };
 
     onPreviewMarker(newCamera);
@@ -84,12 +82,12 @@ export default function AddNewModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const lat = parseFloat(latitude);
     const long = parseFloat(longitude);
 
     const data = {
       cameraType: cameraType,
-      address: address,
       longitude: long,
       latitude: lat,
     };
@@ -127,11 +125,13 @@ export default function AddNewModal({
           </button>
         </div>
 
+        {/* OPENENING AND CLOSING THIS MODAL FROM HERE  */}
         <div className={styles.closer} onClick={() => setClosing(!closing)}>
           <p></p>
         </div>
 
         <form onSubmit={handleSubmit}>
+          {/* INPUT GROUP FOR CAMERA TYPE SELECT  */}
           <div className={styles.inputGroup}>
             <label htmlFor="">Тип камеры</label>
             <select
@@ -150,16 +150,7 @@ export default function AddNewModal({
             </select>
           </div>
 
-          <div className={styles.inputGroup}>
-            <label htmlFor="">Адрес</label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
-          </div>
-
+          {/* INPUT GROUP FOR LATITUDE  */}
           <div className={styles.inputGroup}>
             <label htmlFor="">Широта</label>
             <input
@@ -170,6 +161,7 @@ export default function AddNewModal({
             />
           </div>
 
+          {/* INPUT GROUP FOR LONGITUDE  */}
           <div className={styles.inputGroup}>
             <label htmlFor="">Долгота</label>
             <input
@@ -180,8 +172,10 @@ export default function AddNewModal({
             />
           </div>
 
+          {/* ERRORS WILL SHOW HERE  */}
           <p>{error}</p>
 
+          {/* BUTTON FOR DEMONSTRATING CURRENT LOCATION  */}
           <button type="button" onClick={handleShow}>
             Показать на карте
           </button>

@@ -46,7 +46,7 @@ export default function CamerasPage() {
     const fetchCameras = async () => {
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/cameras?cameraType=${filters.cameraType}&startDate=${filters.startDate}&endDate=${filters.endDate}&page=${page}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/cameras?cameraType=${filters.cameraType}&district=${filters.district}&mahalla=${filters.mahalla}&startDate=${filters.startDate}&endDate=${filters.endDate}&page=${page}`
         );
 
         setCameras(res.data?.data);
@@ -89,7 +89,8 @@ export default function CamerasPage() {
                 <tr>
                   <td>Икона</td>
                   <td>Тип камеры</td>
-                  <td>Адрес</td>
+                  <td>Rayon</td>
+                  <td>Mahalla</td>
                   <td>Широта</td>
                   <td>Долгота</td>
                   <td>Дата добавления</td>
@@ -111,7 +112,8 @@ export default function CamerasPage() {
                       />
                     </td>
                     <td>{`${names[camera.cameraType]}`}</td>
-                    <td>{camera.address}</td>
+                    <td>{camera.district}</td>
+                    <td>{camera.mahalla}</td>
                     <td>{camera.position[1]}</td>
                     <td>{camera.position[0]}</td>
                     <td>{format(camera.createdAt, "dd.MM.yyyy")}</td>

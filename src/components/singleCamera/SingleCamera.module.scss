@@ -1,0 +1,48 @@
+.singleCamera {
+  margin: 0;
+  padding: 0;
+
+  h1 {
+    font-size: 15px;
+  }
+
+  p {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    button {
+      background: none;
+      display: flex;
+      align-items: center;
+      border: none;
+      cursor: pointer;
+      border: 1px solid #353535;
+      padding: 8px;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      font-size: 13px;
+
+      &:last-child {
+        background-color: #353535;
+        color: white;
+      }
+
+      svg {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -34,10 +34,11 @@ export default function AddNewClick({
   setTempMarkerClick,
 }) {
   const [cameraType, setCameraType] = useState("");
-  const [address, setAddress] = useState("");
 
+  // STATE FOR CLOSING AND OPENING THIS MODAL
   const [closing, setClosing] = useState(false);
 
+  // HANDLE SUBMIT FOR ADDING NEW CAMERA WITH DOUBLE CLICK
   const handleSubmit = async (e) => {
     e.preventDefault();
     const lat = parseFloat(latitude);
@@ -45,7 +46,6 @@ export default function AddNewClick({
 
     const data = {
       cameraType: cameraType,
-      address: address,
       longitude: long,
       latitude: lat,
     };
@@ -88,6 +88,7 @@ export default function AddNewClick({
         </div>
 
         <form onSubmit={handleSubmit}>
+          {/* INPUT GROUP FOR CAMERA TYPE SELECT  */}
           <div className={styles.inputGroup}>
             <label htmlFor="">Тип камеры</label>
             <select
@@ -106,20 +107,13 @@ export default function AddNewClick({
             </select>
           </div>
 
-          <div className={styles.inputGroup}>
-            <label htmlFor="">Адрес</label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
-
+          {/* INPUT GROUP FOR LATITUDE  */}
           <div className={styles.inputGroup}>
             <label htmlFor="">Широта </label>
             <input type="number" value={latitude} disabled />
           </div>
 
+          {/* INPUT GROUP FOR LONGITUDE  */}
           <div className={styles.inputGroup}>
             <label htmlFor="">Долгота</label>
             <input type="number" value={longitude} disabled />

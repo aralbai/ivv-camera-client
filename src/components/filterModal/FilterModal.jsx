@@ -4,8 +4,9 @@ import DatePicker from "react-datepicker";
 import styles from "./FilterModal.module.scss";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Close } from "@mui/icons-material";
+import { qoraqalpogiston } from "@/data/data";
 
 const names = [
   {
@@ -41,6 +42,18 @@ const cameraTypes = {
 
 export default function FilterModal({ filters, setFilters, totalCameras }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [filteredMahalla, setFilteredMahalla] = useState([]);
+
+  useEffect(() => {
+    if (filters.district === "all") {
+      setFilteredMahalla([]);
+    } else {
+      const current = qoraqalpogiston.find(
+        (one) => one.district === filters.district
+      );
+      setFilteredMahalla(current);
+    }
+  }, [filters]);
 
   return (
     <div className={styles.filterModal}>
@@ -56,7 +69,7 @@ export default function FilterModal({ filters, setFilters, totalCameras }) {
           <li>
             <label htmlFor="">Тип камеры</label>
             <select
-              name="product"
+              name="cameraType"
               value={filters.cameraType}
               onChange={(e) =>
                 setFilters((prev) => ({
@@ -70,6 +83,51 @@ export default function FilterModal({ filters, setFilters, totalCameras }) {
               {names.map((name) => (
                 <option key={name.type} value={name.type}>
                   {name.name}
+                </option>
+              ))}
+            </select>
+          </li>
+
+          <li>
+            <label htmlFor="">Район</label>
+            <select
+              name="district"
+              value={filters.district}
+              onChange={(e) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  district: e.target.value,
+                  mahalla: "all",
+                }))
+              }
+            >
+              <option value="all">Все</option>
+
+              {qoraqalpogiston.map((name) => (
+                <option key={name.district} value={name.district}>
+                  {name.district}
+                </option>
+              ))}
+            </select>
+          </li>
+
+          <li>
+            <label htmlFor="">МПЖ</label>
+            <select
+              name="mahalla"
+              value={filters.mahalla}
+              onChange={(e) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  mahalla: e.target.value,
+                }))
+              }
+            >
+              <option value="all">Все</option>
+
+              {filteredMahalla?.mahalla?.map((name) => (
+                <option key={name} value={name}>
+                  {name}
                 </option>
               ))}
             </select>
