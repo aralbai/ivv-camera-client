@@ -90,8 +90,8 @@ export default function CamerasPage() {
                 <tr>
                   <td>Икона</td>
                   <td>Тип камеры</td>
-                  <td>Rayon</td>
-                  <td>Mahalla</td>
+                  <td>Район</td>
+                  <td>МПЖ</td>
                   <td>Широта</td>
                   <td>Долгота</td>
                   <td>Дата добавления</td>
