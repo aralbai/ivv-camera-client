@@ -34,7 +34,6 @@ export default function EditCamera({
 }) {
   const [cameraType, setCameraType] = useState("");
   const [cameraId, setCameraId] = useState("");
-  const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [error, setError] = useState("");
@@ -75,7 +74,6 @@ export default function EditCamera({
 
     const data = {
       cameraType: cameraType,
-      address: address,
       longitude: long,
       latitude: lat,
     };
@@ -97,7 +95,6 @@ export default function EditCamera({
   useEffect(() => {
     setCameraId(selectedCamera?._id);
     setCameraType(selectedCamera?.cameraType);
-    setAddress(selectedCamera?.address);
     setLatitude(parseFloat(selectedCamera?.position[1]));
     setLongitude(parseFloat(selectedCamera?.position[0]));
   }, [selectedCamera]);
@@ -134,16 +131,6 @@ export default function EditCamera({
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="">Адрес</label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
           </div>
 
           <div className={styles.inputGroup}>

@@ -9,7 +9,6 @@ import FilterModal from "@/components/filterModal/FilterModal";
 import SaveToExcel from "@/components/saveToExcel/SaveToExcel";
 import Paginatin from "@/components/pagination/Paginatin";
 import EditCamera from "@/components/editCamera/EditCamera";
-import DeleteModal from "@/components/deleteModal/DeleteModal";
 import DeleteCM from "@/components/deleteCM/DeleteCM";
 import { useUserContext } from "@/context/UserContext";
 import ProtectedRoutes from "@/components/protectedRoutes/ProtectedRoutes";
@@ -25,10 +24,12 @@ const names = {
 
 export default function CamerasPage() {
   const { user } = useUserContext();
-  const { menuOpen, setMenuOpen } = useMenuContext();
+  const { setMenuOpen } = useMenuContext();
   const [cameras, setCameras] = useState([]);
   const [filters, setFilters] = useState({
     cameraType: "all",
+    district: "all",
+    mahalla: "all",
     startDate: new Date("2025-01-01"),
     endDate: new Date(),
   });

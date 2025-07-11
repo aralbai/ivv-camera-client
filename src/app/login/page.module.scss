@@ -4,6 +4,7 @@
   justify-content: center;
   min-height: 100vh;
   background-color: #1a2038;
+  color: #171717;
 
   .card {
     background-color: #fff;
@@ -30,6 +31,8 @@
           border-radius: 5px;
           outline: none;
           border: 1px solid #b1b0b4;
+          background-color: white;
+          color: #000;
         }
 
         div {
@@ -43,6 +46,10 @@
           input {
             border: none;
             padding: 0;
+          }
+
+          svg {
+            color: #171717;
           }
         }
       }

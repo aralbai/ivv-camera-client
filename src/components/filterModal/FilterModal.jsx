@@ -88,83 +88,89 @@ export default function FilterModal({ filters, setFilters, totalCameras }) {
             </select>
           </li>
 
-          <li>
-            <label htmlFor="">Район</label>
-            <select
-              name="district"
-              value={filters.district}
-              onChange={(e) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  district: e.target.value,
-                  mahalla: "all",
-                }))
-              }
-            >
-              <option value="all">Все</option>
+          <div className={styles.inputGroup}>
+            <li>
+              <label htmlFor="">Район</label>
+              <select
+                name="district"
+                value={filters.district}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    district: e.target.value,
+                    mahalla: "all",
+                  }))
+                }
+              >
+                <option value="all">Все</option>
 
-              {qoraqalpogiston.map((name) => (
-                <option key={name.district} value={name.district}>
-                  {name.district}
-                </option>
-              ))}
-            </select>
-          </li>
+                {qoraqalpogiston.map((name) => (
+                  <option key={name.district} value={name.district}>
+                    {name.district}
+                  </option>
+                ))}
+              </select>
+            </li>
 
-          <li>
-            <label htmlFor="">МПЖ</label>
-            <select
-              name="mahalla"
-              value={filters.mahalla}
-              onChange={(e) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  mahalla: e.target.value,
-                }))
-              }
-            >
-              <option value="all">Все</option>
+            <li>
+              <label htmlFor="">МПЖ</label>
+              <select
+                name="mahalla"
+                value={filters.mahalla}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    mahalla: e.target.value,
+                  }))
+                }
+              >
+                <option value="all">Все</option>
 
-              {filteredMahalla?.mahalla?.map((name) => (
-                <option key={name} value={name}>
-                  {name}
-                </option>
-              ))}
-            </select>
-          </li>
+                {filteredMahalla?.mahalla?.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </li>
+          </div>
 
-          <li>
-            <label htmlFor="">Дата начала</label>
+          <div className={styles.inputGroup}>
+            <li>
+              <label htmlFor="">Дата начала</label>
 
-            <DatePicker
-              selected={new Date(filters.startDate)}
-              onChange={(date) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  startDate: new Date(date),
-                }))
-              }
-              dateFormat="dd.MM.yyyy"
-              className={styles.dateInput}
-              wrapperClassName={styles.wrappedDateInput}
-            />
-          </li>
-          <li>
-            <label htmlFor="">Дата окончания</label>
+              <DatePicker
+                selected={new Date(filters.startDate)}
+                onChange={(date) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    startDate: new Date(date),
+                  }))
+                }
+                dateFormat="dd.MM.yyyy"
+                className={styles.dateInput}
+                wrapperClassName={styles.wrappedDateInput}
+              />
+            </li>
 
-            <DatePicker
-              selected={new Date(filters.endDate)}
-              onChange={(date) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  endDate: new Date(date),
-                }))
-              }
-              dateFormat="dd.MM.yyyy"
-              className={styles.dateInput}
-              wrapperClassName={styles.wrappedDateInput}
-            />
-          </li>
+            <li>
+              <label htmlFor="">Дата окончания</label>
+
+              <DatePicker
+                selected={new Date(filters.endDate)}
+                onChange={(date) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    endDate: new Date(date),
+                  }))
+                }
+                dateFormat="dd.MM.yyyy"
+                className={styles.dateInput}
+                wrapperClassName={styles.wrappedDateInput}
+              />
+            </li>
+          </div>
+
           <li className={styles.close} onClick={() => setModalOpen(false)}>
             <Close />
           </li>

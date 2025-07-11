@@ -1,5 +1,6 @@
 .filterModal {
   position: relative;
+  color: #171717;
 
   .filter {
     display: flex;
@@ -11,10 +12,9 @@
   }
 
   .main {
-    position: absolute;
-    bottom: -110px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;
+    top: 60px;
+    left: 250px;
     z-index: 999;
     background-color: #fff;
     display: flex;
@@ -26,7 +26,16 @@
     -webkit-box-shadow: 1px 1px 19px 0px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 1px 1px 19px 0px rgba(34, 60, 80, 0.2);
     box-shadow: 1px 1px 19px 0px rgba(34, 60, 80, 0.2);
-    z-index: 9999999;
+
+    .inputGroup {
+      display: flex;
+      width: 40%;
+      gap: 20px;
+
+      li {
+        width: 50%;
+      }
+    }
 
     li {
       display: flex;
@@ -36,6 +45,7 @@
 
       input,
       select {
+        color: #171717;
         width: 100%;
         padding: 5px;
         outline: none;
@@ -62,14 +72,55 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1200px) {
   .filterModal {
     .main {
-      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .filterModal {
+    .main {
       left: 50%;
       transform: translateX(-50%);
       flex-direction: column;
       height: max-content;
+
+      li {
+        width: 80%;
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .inputGroup {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .filterModal {
+    .main {
+      left: 50%;
+      transform: translateX(-50%);
+      flex-direction: column;
+      height: max-content;
+
+      .inputGroup {
+        flex-direction: column;
+
+        li {
+          width: 100%;
+        }
+      }
 
       li {
         width: 100%;

@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  color: #171717;
 
   .card {
     background-color: white;
@@ -57,6 +58,8 @@
           outline: none;
           padding: 10px;
           border-radius: 5px;
+          background-color: #fff;
+          color: #000;
         }
 
         div {
@@ -71,6 +74,10 @@
             width: 90%;
             border: none;
             padding: 10px;
+          }
+
+          svg {
+            color: #171717;
           }
         }
       }

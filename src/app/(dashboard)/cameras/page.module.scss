@@ -1,4 +1,6 @@
 .cameras {
+  color: #171717;
+
   .title {
     height: 60px;
     padding: 10px;
@@ -17,6 +19,13 @@
       border: none;
       padding: 5px 10px;
       cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      display: none;
+
+      svg {
+        color: #171717;
+      }
     }
 
     h1 {
@@ -76,9 +85,23 @@
               display: flex;
               align-items: center;
               justify-content: center;
+
+              svg {
+                color: #171717;
+              }
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .cameras {
+    .title {
+      .menu {
+        display: flex;
       }
     }
   }

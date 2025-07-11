@@ -268,7 +268,7 @@ export default function MapView() {
       {/* TURN ON/OFF GEOJSON  */}
       <div className={styles.geojsonLayer}>
         <button onClick={() => setGeojsonLayer(!geojsonLayer)}>
-          {geojsonLayer ? <LayersIcon /> : <LayersClearIcon />}
+          {geojsonLayer ? <LayersClearIcon /> : <LayersIcon />}
         </button>
       </div>
 

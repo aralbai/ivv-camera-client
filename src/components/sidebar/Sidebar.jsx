@@ -33,8 +33,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <div className={styles.title}>
           <h1>IIV CAMERA</h1>
 
-          <button>
-            <Close onClick={() => setMenuOpen(false)} />
+          <button onClick={() => setMenuOpen(false)}>
+            <Close />
           </button>
         </div>
 
