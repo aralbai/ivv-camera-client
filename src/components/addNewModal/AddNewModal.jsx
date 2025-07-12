@@ -33,11 +33,21 @@ export default function AddNewModal({
   setTempMarker,
 }) {
   const [cameraType, setCameraType] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [coordinates, setCoordinates] = useState({
+    latitude: "",
+    longitude: "",
+  });
   const [error, setError] = useState("");
 
   const [closing, setClosing] = useState(false);
+
+  const handleChange = (e) => {
+    const splitted = e.target.value.split(",");
+    setCoordinates({
+      latitude: splitted[0],
+      longitude: splitted[1],
+    });
+  };
 
   // CHECK LATITUDE AND LONGITUDE HERE
   const handleError = (lat, long) => {
@@ -66,8 +76,8 @@ export default function AddNewModal({
   };
 
   const handleShow = (e) => {
-    const lat = parseFloat(latitude);
-    const long = parseFloat(longitude);
+    const lat = parseFloat(coordinates.latitude);
+    const long = parseFloat(coordinates.longitude);
 
     const resultError = handleError(lat, long);
     if (resultError) return;
@@ -83,8 +93,8 @@ export default function AddNewModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const lat = parseFloat(latitude);
-    const long = parseFloat(longitude);
+    const lat = parseFloat(coordinates.latitude);
+    const long = parseFloat(coordinates.longitude);
 
     const data = {
       cameraType: cameraType,
@@ -152,24 +162,8 @@ export default function AddNewModal({
 
           {/* INPUT GROUP FOR LATITUDE  */}
           <div className={styles.inputGroup}>
-            <label htmlFor="">Широта</label>
-            <input
-              type="number"
-              value={latitude}
-              onChange={(e) => setLatitude(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* INPUT GROUP FOR LONGITUDE  */}
-          <div className={styles.inputGroup}>
-            <label htmlFor="">Долгота</label>
-            <input
-              type="number"
-              value={longitude}
-              onChange={(e) => setLongitude(e.target.value)}
-              required
-            />
+            <label htmlFor="">Координаты</label>
+            <input type="text" onChange={(e) => handleChange(e)} required />
           </div>
 
           {/* ERRORS WILL SHOW HERE  */}

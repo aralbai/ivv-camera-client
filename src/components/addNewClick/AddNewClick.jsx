@@ -109,14 +109,8 @@ export default function AddNewClick({
 
           {/* INPUT GROUP FOR LATITUDE  */}
           <div className={styles.inputGroup}>
-            <label htmlFor="">Широта </label>
-            <input type="number" value={latitude} disabled />
-          </div>
-
-          {/* INPUT GROUP FOR LONGITUDE  */}
-          <div className={styles.inputGroup}>
-            <label htmlFor="">Долгота</label>
-            <input type="number" value={longitude} disabled />
+            <label htmlFor="">Координаты </label>
+            <input type="text" value={`${latitude}, ${longitude}`} disabled />
           </div>
 
           <button>Сохранять</button>

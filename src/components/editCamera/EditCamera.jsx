@@ -34,9 +34,20 @@ export default function EditCamera({
 }) {
   const [cameraType, setCameraType] = useState("");
   const [cameraId, setCameraId] = useState("");
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [coordinates, setCoordinates] = useState({
+    latitude: "",
+    longitude: "",
+  });
   const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const splitted = e.target.value.split(",").map((s) => s.trim());
+
+    setCoordinates({
+      latitude: splitted[0],
+      longitude: splitted[1],
+    });
+  };
 
   const handleError = (lat, long) => {
     let newErrors = "";
@@ -66,8 +77,8 @@ export default function EditCamera({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const lat = parseFloat(latitude);
-    const long = parseFloat(longitude);
+    const lat = parseFloat(coordinates.latitude);
+    const long = parseFloat(coordinates.longitude);
 
     const err = handleError(lat, long);
     if (err) return;
@@ -95,8 +106,10 @@ export default function EditCamera({
   useEffect(() => {
     setCameraId(selectedCamera?._id);
     setCameraType(selectedCamera?.cameraType);
-    setLatitude(parseFloat(selectedCamera?.position[1]));
-    setLongitude(parseFloat(selectedCamera?.position[0]));
+    setCoordinates({
+      latitude: selectedCamera?.position[1],
+      longitude: selectedCamera?.position[0],
+    });
   }, [selectedCamera]);
 
   return (
@@ -134,23 +147,8 @@ export default function EditCamera({
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="">Широта</label>
-            <input
-              type="number"
-              value={latitude}
-              onChange={(e) => setLatitude(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="">Долгота</label>
-            <input
-              type="number"
-              value={longitude}
-              onChange={(e) => setLongitude(e.target.value)}
-              required
-            />
+            <label htmlFor="">Координаты</label>
+            <input type="text" onChange={(e) => handleChange(e)} />
           </div>
 
           <p>{error}</p>
