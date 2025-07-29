@@ -17,6 +17,8 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import SingleCamera from "../singleCamera/SingleCamera";
 import LayersIcon from "@mui/icons-material/Layers";
 import LayersClearIcon from "@mui/icons-material/LayersClear";
+import ViewCamera from "../viewCamera/ViewCamera";
+import AddCameraIP from "../addCameraIP/AddCameraIP";
 
 export default function MapView() {
   const { user } = useUserContext();
@@ -38,6 +40,9 @@ export default function MapView() {
 
   const [deleteModal, setDeleteModal] = useState(false);
   const [deletedCameraId, setDeletedCamereId] = useState("");
+
+  const [viewCamera, setViewCamera] = useState(false);
+  const [addCameraIPModal, setAddCameraIPModal] = useState(false);
 
   const [filters, setFilters] = useState({
     cameraType: "all",
@@ -125,7 +130,14 @@ export default function MapView() {
     };
 
     fetchCameras();
-  }, [filters, addNewModalOpen, addNewClickOpen, editModalOpen, deleteModal]);
+  }, [
+    filters,
+    addNewModalOpen,
+    addNewClickOpen,
+    editModalOpen,
+    deleteModal,
+    addCameraIPModal,
+  ]);
 
   const handleRefreshPage = () => {
     window.location.reload();
@@ -216,6 +228,8 @@ export default function MapView() {
                 setEditableCamera={setEditableCamera}
                 setDeleteModal={setDeleteModal}
                 setDeletedCamereId={setDeletedCamereId}
+                setViewCamera={setViewCamera}
+                setAddCameraIPModal={setAddCameraIPModal}
               />
             )}
           </Marker>
@@ -318,6 +332,18 @@ export default function MapView() {
           setCameras={setCameras}
           setSelectedCamera={setSelectedCamera}
           setDeletedCamereId={setDeletedCamereId}
+        />
+      )}
+
+      {/* OPEN VIEW CAMERA IFRAME  */}
+      {viewCamera && <ViewCamera setViewCamera={setViewCamera} />}
+
+      {/* OPEN ADD CAMERA IP MODAL  */}
+      {addCameraIPModal && (
+        <AddCameraIP
+          editableCamera={editableCamera}
+          setEditableCamera={setEditableCamera}
+          setAddCameraIPModal={setAddCameraIPModal}
         />
       )}
     </div>
