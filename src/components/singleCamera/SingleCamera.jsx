@@ -16,6 +16,7 @@ export default function SingleCamera({
   setDeletedCamereId,
   setViewCamera,
   setAddCameraIPModal,
+  setStreemCamera
 }) {
   const { user } = useUserContext();
 
@@ -40,7 +41,7 @@ export default function SingleCamera({
         </p>
 
         <div>
-          <button onClick={() => setViewCamera(true)}>
+          <button onClick={() => {setViewCamera(true), setStreemCamera(camera)}}>
             <Visibility />
           </button>
 

@@ -34,6 +34,9 @@ export default function AddNewClick({
   setTempMarkerClick,
 }) {
   const [cameraType, setCameraType] = useState("");
+  const [ip, setIp] = useState("")
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
 
   // STATE FOR CLOSING AND OPENING THIS MODAL
   const [closing, setClosing] = useState(false);
@@ -48,6 +51,9 @@ export default function AddNewClick({
       cameraType: cameraType,
       longitude: long,
       latitude: lat,
+      ip: ip,
+      login: login,
+      password: password
     };
 
     try {
@@ -62,6 +68,8 @@ export default function AddNewClick({
     } catch (err) {
       toast.error(err?.response?.data?.message);
     }
+    console.log(data);
+    
   };
 
   return (
@@ -111,6 +119,24 @@ export default function AddNewClick({
           <div className={styles.inputGroup}>
             <label htmlFor="">Координаты </label>
             <input type="text" value={`${latitude}, ${longitude}`} disabled />
+          </div>
+
+          {/* INPUT GROUP FOR LATITUDE  */}
+          <div className={styles.inputGroup}>
+            <label htmlFor="">IP </label>
+            <input type="text" value={ip} onChange={(e) => setIp(e.target.value)}  />
+          </div>
+
+          {/* INPUT GROUP FOR LATITUDE  */}
+          <div className={styles.inputGroup}>
+            <label htmlFor="">Login </label>
+            <input type="text"  value={login} onChange={(e) => setLogin(e.target.value)} />
+          </div>
+
+          {/* INPUT GROUP FOR LATITUDE  */}
+          <div className={styles.inputGroup}>
+            <label htmlFor="">Parol </label>
+            <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}  />
           </div>
 
           <button>Сохранять</button>

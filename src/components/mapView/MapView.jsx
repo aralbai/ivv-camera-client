@@ -17,7 +17,6 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import SingleCamera from "../singleCamera/SingleCamera";
 import LayersIcon from "@mui/icons-material/Layers";
 import LayersClearIcon from "@mui/icons-material/LayersClear";
-import ViewCamera from "../viewCamera/ViewCamera";
 import AddCameraIP from "../addCameraIP/AddCameraIP";
 import StreamPage from "../streem/Streem";
 
@@ -44,6 +43,8 @@ export default function MapView() {
 
   const [viewCamera, setViewCamera] = useState(false);
   const [addCameraIPModal, setAddCameraIPModal] = useState(false);
+
+  const [streemCamera, setStreemCamera] = useState(null)
 
   const [filters, setFilters] = useState({
     cameraType: "all",
@@ -161,6 +162,10 @@ export default function MapView() {
     });
   };
 
+
+  console.log(tempMarkerClick);
+
+
   return (
     <div
       className={styles.mapView}
@@ -231,6 +236,7 @@ export default function MapView() {
                 setDeletedCamereId={setDeletedCamereId}
                 setViewCamera={setViewCamera}
                 setAddCameraIPModal={setAddCameraIPModal}
+                setStreemCamera={setStreemCamera}
               />
             )}
           </Marker>
@@ -338,7 +344,7 @@ export default function MapView() {
 
       {/* OPEN VIEW CAMERA IFRAME  */}
       {/* {viewCamera && <ViewCamera setViewCamera={setViewCamera} />} */}
-      {viewCamera && <StreamPage setViewCamera={setViewCamera} />}
+      {viewCamera && <StreamPage setViewCamera={setViewCamera} streemCamera={streemCamera} setStreemCamera={setStreemCamera} />}
 
       {/* OPEN ADD CAMERA IP MODAL  */}
       {addCameraIPModal && (
