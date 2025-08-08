@@ -19,6 +19,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import LayersClearIcon from "@mui/icons-material/LayersClear";
 import ViewCamera from "../viewCamera/ViewCamera";
 import AddCameraIP from "../addCameraIP/AddCameraIP";
+import StreamPage from "../streem/Streem";
 
 export default function MapView() {
   const { user } = useUserContext();
@@ -336,7 +337,8 @@ export default function MapView() {
       )}
 
       {/* OPEN VIEW CAMERA IFRAME  */}
-      {viewCamera && <ViewCamera setViewCamera={setViewCamera} />}
+      {/* {viewCamera && <ViewCamera setViewCamera={setViewCamera} />} */}
+      {viewCamera && <StreamPage setViewCamera={setViewCamera} />}
 
       {/* OPEN ADD CAMERA IP MODAL  */}
       {addCameraIPModal && (

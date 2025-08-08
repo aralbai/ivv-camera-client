@@ -31,7 +31,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
     <div className={menuOpen ? `${styles.sidebarOpen}` : `${styles.sidebar}`}>
       <div className={styles.top}>
         <div className={styles.title}>
-          <h1>IIV CAMERA</h1>
+          <h1>PK-1</h1>
 
           <button onClick={() => setMenuOpen(false)}>
             <Close />

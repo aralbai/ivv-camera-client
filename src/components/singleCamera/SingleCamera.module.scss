@@ -21,6 +21,7 @@
     gap: 20px;
 
     button {
+      width: 25%;
       background: none;
       display: flex;
       align-items: center;
@@ -28,18 +29,12 @@
       cursor: pointer;
       border: 1px solid #353535;
       padding: 8px;
-      width: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 5px;
       font-size: 13px;
       color: #171717;
-
-      &:last-child {
-        background-color: #353535;
-        color: white;
-      }
 
       svg {
         font-size: 20px;

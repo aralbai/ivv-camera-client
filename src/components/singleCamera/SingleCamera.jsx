@@ -39,51 +39,53 @@ export default function SingleCamera({
           <DnsIcon /> IP: <b>{camera?.ip}</b>
         </p>
 
-        {user?.role === "admin" && (
-          <div>
-            <button onClick={() => setViewCamera(true)}>
-              <Visibility />
-            </button>
+        <div>
+          <button onClick={() => setViewCamera(true)}>
+            <Visibility />
+          </button>
 
-            <button
-              onClick={() => {
-                setAddCameraIPModal(true);
-                setEditableCamera({
-                  _id: camera._id,
-                  position: [camera.position[1], camera.position[0]],
-                  cameraType: camera.cameraType,
-                  ip: camera.ip,
-                });
-              }}
-            >
-              <AddCircle />
-            </button>
+          {user?.role === "admin" && (
+            <div>
+              <button
+                onClick={() => {
+                  setAddCameraIPModal(true);
+                  setEditableCamera({
+                    _id: camera._id,
+                    position: [camera.position[1], camera.position[0]],
+                    cameraType: camera.cameraType,
+                    ip: camera.ip,
+                  });
+                }}
+              >
+                <AddCircle />
+              </button>
 
-            <button
-              onClick={() => {
-                setEditModalOpen(true);
-                setSelectedCamera(false);
-                setEditableCamera({
-                  _id: camera._id,
-                  position: [camera.position[1], camera.position[0]],
-                  cameraType: camera.cameraType,
-                });
-              }}
-            >
-              <Edit />
-            </button>
+              <button
+                onClick={() => {
+                  setEditModalOpen(true);
+                  setSelectedCamera(false);
+                  setEditableCamera({
+                    _id: camera._id,
+                    position: [camera.position[1], camera.position[0]],
+                    cameraType: camera.cameraType,
+                  });
+                }}
+              >
+                <Edit />
+              </button>
 
-            <button
-              onClick={() => {
-                setDeleteModal(true);
-                setSelectedCamera(false);
-                setDeletedCamereId(camera._id);
-              }}
-            >
-              <Delete />
-            </button>
-          </div>
-        )}
+              <button
+                onClick={() => {
+                  setDeleteModal(true);
+                  setSelectedCamera(false);
+                  setDeletedCamereId(camera._id);
+                }}
+              >
+                <Delete />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </Popup>
   );

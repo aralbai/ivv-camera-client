@@ -9,7 +9,7 @@ export default function ViewCamera({ setViewCamera }) {
       </button>
 
       <iframe
-        src="http://localhost:3001" // <-- bu yerga IP address yozing
+        src="rtsp://admin:Sl@ym224@10.144.184.49/main" // <-- bu yerga IP address yozing
         width="100%"
         height="100%"
         style={{ border: "none" }}
